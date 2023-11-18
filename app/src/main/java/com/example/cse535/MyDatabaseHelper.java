@@ -30,6 +30,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COUGH = "cough";
     private static final String BREATHLESSNESS = "breathlessness";
     private static final String TIRED = "tired";
+    private static final String COMPUTED_SYMPTOMS = "computed_symptoms";
 
 
 
@@ -53,7 +54,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + NO_SMELL_TASTE + " INTEGER CHECK (" + NO_SMELL_TASTE + " >= 0 AND " + NO_SMELL_TASTE + " <= 5), "
                 + COUGH + " INTEGER CHECK (" + COUGH + " >= 0 AND " + COUGH + " <= 5), "
                 + BREATHLESSNESS + " INTEGER CHECK (" + BREATHLESSNESS + " >= 0 AND " + BREATHLESSNESS + " <= 5), "
-                + TIRED + " INTEGER CHECK (" + TIRED + " >= 0 AND " + TIRED + " <= 5)"
+                + TIRED + " INTEGER CHECK (" + TIRED + " >= 0 AND " + TIRED + " <= 5), "
+                + COMPUTED_SYMPTOMS + " DECIMAL"
                 + ");";
         db.execSQL(query);
     }
@@ -67,16 +69,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void saveRecord(
             int heartRate,
             int respiratoryRate,
-            float fever,
-            float nausea,
-            float headache,
-            float diarrhea,
-            float soarThroat,
-            float muscleAche,
-            float noSmellTaste,
-            float cough,
-            float breathlessness,
-            float tired) {
+            int fever,
+            int nausea,
+            int headache,
+            int diarrhea,
+            int soarThroat,
+            int muscleAche,
+            int noSmellTaste,
+            int cough,
+            int breathlessness,
+            int tired,
+            double computedSymptoms
+            ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -92,6 +96,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COUGH, cough);
         cv.put(BREATHLESSNESS, breathlessness);
         cv.put(TIRED, tired);
+        cv.put(COMPUTED_SYMPTOMS, computedSymptoms);
 
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1) {

@@ -67,10 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.symptomBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
-
-            intent.putExtra("heartRateValue", heartRateValue);
-            intent.putExtra("respiratoryRateValue", respiratoryRateValue);
-
             startActivity(intent);
         });
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
@@ -97,6 +93,27 @@ public class MainActivity extends AppCompatActivity {
         binding.gotoMapBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
             startActivity(intent);
+        });
+
+        binding.save.setOnClickListener(v -> {
+            myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
+            ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
+            myDatabaseHelper.saveRecord(
+                    heartRateValue,
+                    respiratoryRateValue,
+                    shareSymptomsData.getFever(),
+                    shareSymptomsData.getNausea(),
+                    shareSymptomsData.getHeadache(),
+                    shareSymptomsData.getDiarrhea(),
+                    shareSymptomsData.getSoar_throat(),
+                    shareSymptomsData.getMuscle_ache(),
+                    shareSymptomsData.getNo_smell_taste(),
+                    shareSymptomsData.getCough(),
+                    shareSymptomsData.getBreathlessness(),
+                    shareSymptomsData.getTired(),
+                    shareSymptomsData.getSymptomComputedEffect()
+            );
+            getMetaData();
         });
     }
     public void openFileDialog() {

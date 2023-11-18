@@ -291,7 +291,7 @@
         android:layout_width="344dp"
         android:layout_height="43dp"
         android:layout_marginTop="8dp"
-        android:text="Save Record"
+        android:text="Save Symptoms"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
