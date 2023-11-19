@@ -95,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.FuzzyButton.setOnClickListener( v -> {
+            Intent intent = new Intent(MainActivity.this, FuzzyTestActivity.class);
+            startActivity(intent);
+        });
+
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();

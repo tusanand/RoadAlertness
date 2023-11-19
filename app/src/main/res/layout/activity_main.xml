@@ -173,4 +173,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measureRespiratoryRate" />
 
+    <Button
+        android:id="@+id/FuzzyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="212dp"
+        android:text="TestFuzzy"
+        app:layout_constraintEnd_toStartOf="@+id/addBtn"
+        app:layout_constraintTop_toBottomOf="@+id/save" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

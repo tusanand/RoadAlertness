@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FuzzyTestActivity">
+
+    <EditText
+        android:id="@+id/HRText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="HR"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="31dp" />
+
+    <EditText
+        android:id="@+id/RRText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="RR"
+        app:layout_constraintTop_toBottomOf="@+id/HRText"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <EditText
+        android:id="@+id/TRText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="TR"
+        app:layout_constraintTop_toBottomOf="@+id/RRText"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <EditText
+        android:id="@+id/SleepText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Sleep"
+        app:layout_constraintTop_toBottomOf="@+id/TRText"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <EditText
+        android:id="@+id/SymptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Sympt"
+        app:layout_constraintTop_toBottomOf="@+id/SleepText"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <Button
+        android:id="@+id/TestFuzzyButton"
+        android:layout_width="149dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="52dp"
+        android:text="Test"
+        app:layout_constraintTop_toBottomOf="@+id/SymptText"
+        tools:layout_editor_absoluteX="114dp" />
+
+    <TextView
+        android:id="@+id/OutputText"
+        android:layout_width="307dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:text="Output Here"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/TestFuzzyButton"
+        tools:layout_editor_absoluteX="31dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
