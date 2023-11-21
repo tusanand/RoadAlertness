@@ -3,10 +3,8 @@ package com.example.cse535;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
 
 import com.example.cse535.databinding.ActivityFuzzyTestBinding;
-import com.example.cse535.databinding.ActivityMainBinding;
 
 public class FuzzyTestActivity extends AppCompatActivity {
 
@@ -23,15 +21,25 @@ public class FuzzyTestActivity extends AppCompatActivity {
 
     private void onButtonClicked() {
 
-        Editable hr = binding.HRText.getText();
-        Editable rr = binding.RRText.getText();
-        Editable tr = binding.TRText.getText();
-        Editable sleep = binding.SleepText.getText();
-        Editable sympt = binding.SymptText.getText();
+        String hr = binding.HRText.getText().toString();
+        double hrDouble = Double.parseDouble(hr);
 
+        String rr = binding.RRText.getText().toString();
+        double rrDouble = Double.parseDouble(rr);
 
-        binding.OutputText.setText("TESTTESTTEST");
+        String tr = binding.TRText.getText().toString();
+        double trDouble = Double.parseDouble(tr);
 
+        String sleep = binding.SleepText.getText().toString();
+        double sleepDouble = Double.parseDouble(sleep);
+
+        String symptom = binding.SymptText.getText().toString();
+        double symptomDouble = Double.parseDouble(symptom);
+
+        double outputReaction = TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, trDouble, sleepDouble, symptomDouble);
+
+        String outputText = "TR: " + outputReaction;
+        binding.OutputText.setText(outputText);
 
     }
 }
