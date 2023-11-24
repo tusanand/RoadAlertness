@@ -1,7 +1,12 @@
 package com.example.cse535;
 
+import android.util.Log;
+
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class TRFuzzyLogicController {
     private static final double e = 2.71828d;
@@ -14,6 +19,17 @@ public class TRFuzzyLogicController {
         int trMembership = 0;
         int sleepMembership = 0;
         int symptomMembership = 0;
+
+        double hrLow = HRMFL(hr);
+        double hrHigh = HRMFH(hr);
+        double rrLow = RRMFL(rr);
+        double rrHigh = RRMFH(rr);
+        double trLow = RRMFL(tr);
+        double trHigh = RRMFH(tr);
+        double sleepLow = SLEEPMFL(sleep);
+        double sleepHigh = SLEEPMFH(sleep);
+        double symptLow = SYMPTMFL(symptom);
+        double symptHigh = SYMPTMFH(symptom);
 
         if (HRMFL(hr) < HRMFH(hr)) {hrMembership = 1;}
         if (RRMFL(rr) < RRMFH(rr)) { rrMembership = 1;}
@@ -36,156 +52,245 @@ public class TRFuzzyLogicController {
             double ruleImpact5 = 0;
 
             if (rules[0]) {
-                Double[] values = {HRMFL(hr), RRMFL(rr), OUTPUTL(i)};
+                Double[] values = {HRMFL(hr), RRMFL(rr)};
                 ruleImpact0 = Collections.max(Arrays.asList(values));
+
+                if (OUTPUTL(i) < ruleImpact0) {
+                    ruleImpact0 = OUTPUTL(i);
+                }
+
             }
 
             if (rules[1]) {
-                Double[] values = {HRMFL(hr), RRMFH(rr), OUTPUTH(i)};
+                Double[] values = {HRMFL(hr), RRMFH(rr)};
                 ruleImpact1 = Collections.max(Arrays.asList(values));
+
+                if (OUTPUTH(i) < ruleImpact1) {
+                    ruleImpact1 = OUTPUTH(i);
+                }
             }
 
             if (rules[2]) {
-                Double[] values = {HRMFH(hr), RRMFL(rr), OUTPUTL(i)};
+                Double[] values = {HRMFH(hr), RRMFL(rr)};
                 ruleImpact2 = Collections.max(Arrays.asList(values));
+
+                if (OUTPUTL(i) < ruleImpact2) {
+                    ruleImpact2 = OUTPUTL(i);
+                }
             }
 
             if (rules[3]) {
-                Double[] values = {TRMFH(tr),  OUTPUTH(i)};
-                ruleImpact3 = Collections.max(Arrays.asList(values));
+                ruleImpact3 = TRMFH(tr);
+
+                if (OUTPUTH(i) < ruleImpact3) {
+                    ruleImpact3 = OUTPUTH(i);
+                }
             }
 
             if (rules[4]) {
-                Double[] values = {SLEEPMFH(sleep),  OUTPUTH(i)};
-                ruleImpact4 = Collections.max(Arrays.asList(values));
+                ruleImpact4 = SLEEPMFH(sleep);
+
+                if (OUTPUTH(i) < ruleImpact4) {
+                    ruleImpact4 = OUTPUTH(i);
+                }
+
             }
 
             if (rules[5]) {
-                Double[] values = {SYMPTMFH(symptom),  OUTPUTH(i)};
-                ruleImpact5 = Collections.max(Arrays.asList(values));
+                ruleImpact5 = SYMPTMFH(symptom);
+
+                if (OUTPUTH(i) < ruleImpact5) {
+                    ruleImpact5 = OUTPUTH(i);
+                }
             }
 
             Double[] potentialValues = {ruleImpact0, ruleImpact1, ruleImpact2, ruleImpact3, ruleImpact4, ruleImpact5};
+
             int index = (int)(i*1000);
             function[index] = Collections.max(Arrays.asList(potentialValues));
         }
 
-        double median = median(function);
-
-        int index = indexOf(function, median);
-
-        return index/1000.0;
+        return computeCentroid(function);
     }
 
-    private static int indexOf(double[] function, double x) {
+
+    private static int closestIndexOf(double[] function, double x) {
+
+        double lowest = 1000000;
+        int index = 0;
 
         for (int i = 0; i < function.length; i++) {
-            if (function[i] == x) {
-                return i;
+            double diff = (Math.abs(function[i] - x));
+            if (diff <= lowest) {
+                index = i;
+                lowest = diff;
             }
         }
-        return -1;
+        return index;
     }
 
-    private static double median(double[] function) {
+    private static double mean(double[] function) {
 
-        double[] functionCopy = function.clone();
+        double sum = 0;
 
-        double[] function2 = Arrays.stream(functionCopy).sorted().toArray();
-
-        return function2[(int)function2.length/2];
-
-    }
-
-    private static double Gauss(double mean, double std, double x) {
-        return (1 / (std * Math.sqrt(2 * pi))) * Math.pow(e, (-1 * Math.pow((x - mean), 2)) / (2 * Math.pow(std, 2)));
-    }
-
-    private static double Trimf(double peak, double foot1, double foot2, double x) {
-
-        if (x <= foot1) { return 0; }
-
-        if (x < peak) {
-            return (x - foot1)/(peak - foot1);
+        for (double i : function) {
+            sum += i;
         }
 
-        if (x > peak && x < foot2) {
-            return (foot2 - x)/(foot2 - peak);
+        return sum / function.length;
+
+    }
+
+    private static int medianIndex(double[] function) {
+
+        ArrayList<IndexedListValue> func2 = new ArrayList<IndexedListValue>();
+
+        for (int i = 0; i < function.length; i++) {
+            IndexedListValue temp = new IndexedListValue();
+            temp.index = i;
+            temp.value = function[i];
+            func2.add(temp);
         }
 
+        Collections.sort(func2, new Sorter() );
+
+        return func2.get((int)function.length/2).index;
+
+
+    }
+
+    private static double medianValue(double[] function) {
+
+        ArrayList<IndexedListValue> func2 = new ArrayList<IndexedListValue>();
+
+        for (int i = 0; i < function.length; i++) {
+            IndexedListValue temp = new IndexedListValue();
+            temp.index = i;
+            temp.value = function[i];
+            func2.add(temp);
+        }
+
+        Collections.sort(func2, new Sorter() );
+
+        return func2.get((int)function.length/2).value;
+
+
+    }
+
+    private static int computeCentroid(double[] function)
+    {
+
+        int medianIndex = medianIndex(function);
+
+        if (medianIndex == 500) {
+            double medianValue = medianValue(function);
+            double meanValue = mean(function);
+
+            double avg = (meanValue + medianValue) /2;
+            int close = closestIndexOf(function, avg);
+
+            return (int)(medianIndex + close)/2;
+        }
+
+        return medianIndex;
+    }
+
+    private static double Gauss(double x, double mu, double std) {
+
+        double exp = -0.5 * Math.pow(((x - mu)/std), 2);
+        return (1/(std * Math.sqrt(2 * Math.PI))) * Math.exp(exp);
+
+    }
+
+    private static double Trimf(double a, double b, double c, double x) {
+
+        if (x <= a) {
+            Log.d("Debug", String.valueOf(0));
+            return 0;}
+
+        if (a <= x  && x <= b) {
+            Log.d("Debug", String.valueOf((x-a)/(b-a)));
+            return (x-a)/(b-a); }
+
+        if (b <= x && x <= c) {
+            Log.d("Debug", String.valueOf((c-x)/(c-b)));
+            return (c-x)/(c-b); }
+
+        Log.d("Debug", String.valueOf(0));
         return 0;
+
     }
 
     private static double HRMFL(double hr) {
         if (hr > 200) { hr = 200;}
         if (hr < 0) {hr = 0;}
-        return Gauss(1.35, 55.86, hr);
+        return Gauss(hr, 60, 75 );
     }
 
     private static double HRMFH(double hr) {
         if (hr > 200) { hr = 200;}
         if (hr < 0) {hr = 0;}
-        return Gauss(198, 55.64, hr);
+        return Gauss(hr, 120, 60);
     }
 
     private static double RRMFL(double hr) {
         if (hr > 20) { hr = 20;}
         if (hr < 0) {hr = 0;}
-        return Gauss(0, 9.729, hr);
+        return Gauss(hr, 12, 5);
     }
 
     private static double RRMFH(double hr) {
         if (hr > 20) { hr = 20;}
         if (hr < 0) {hr = 0;}
-        return Gauss(20, 5.055, hr);
+        return Gauss(hr, 17, 5.055);
     }
 
     private static double TRMFL(double hr) {
         if (hr > 1) { hr = 1;}
         if (hr < 0) {hr = 0;}
-        return Trimf(0.0053, -0.411, 0.3902, hr);
+        return Trimf(0.0,0.25,  0.3902, hr);
     }
 
     private static double TRMFH(double hr) {
         if (hr > 1) { hr = 1;}
         if (hr < 0) {hr = 0;}
-        return Trimf(1, 0.09656, 1.42, hr);
+        return Trimf(0.0,.82,  1, hr);
     }
 
     private static double SLEEPMFL(double hr) {
         if (hr > 14) { hr = 14;}
         if (hr < 0) {hr = 0;}
-        return Gauss(2.22e-16, 3.476, hr);
+        return Gauss(hr, 3, .7);
     }
 
     private static double SLEEPMFH(double hr) {
         if (hr > 14) { hr = 14;}
         if (hr < 0) {hr = 0;}
-        return Gauss(14, 5.489, hr);
+        return Gauss(hr, 8, 4);
     }
 
     private static double SYMPTMFL(double hr) {
-        if (hr > 100) { hr = 100;}
+        if (hr > 23.25) { hr = 23.25;}
         if (hr < 0) {hr = 0;}
-        return Trimf(-8.88e-16, -41.7, 51.46, hr);
+        return Trimf(-.16,5.5,  15, hr);
     }
 
     private static double SYMPTMFH(double hr) {
-        if (hr > 100) { hr = 100;}
+        if (hr > 23.25) { hr = 23.25;}
         if (hr < 0) {hr = 0;}
-        return Gauss(100, 27.97, hr);
+        return Gauss(hr, 23.23, 10);
     }
 
     private static double OUTPUTL(double x) {
         if (x > 1) { x = 1;}
         if (x < 0) {x = 0;}
-        return Gauss(0.0017, 0.148, x);
+        return Gauss(x, 0.10, .3);
     }
 
     private static double OUTPUTH(double x) {
         if (x > 1) { x = 1;}
         if (x < 0) {x = 0;}
-        return Gauss( 0.985, 0.2805, x);
+        return Gauss( x, 0.99, 0.4);
     }
 
     private static boolean[] EvaluateRules(int hr, int rr, int tr, int sleep, int sympt) {
@@ -214,6 +319,23 @@ public class TRFuzzyLogicController {
         if (sympt == 1) { rules[5] = true; }
 
         return rules;
+
+    }
+
+}
+
+class IndexedListValue {
+
+    int index;
+    double value;
+
+}
+
+class Sorter implements Comparator<IndexedListValue> {
+
+    public int compare(IndexedListValue a, IndexedListValue b) {
+
+        return Double.compare(a.value, b.value);
 
     }
 
