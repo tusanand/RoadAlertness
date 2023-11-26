@@ -180,19 +180,71 @@ public class TRFuzzyLogicController {
     private static int computeCentroid(double[] function)
     {
 
-        int medianIndex = medianIndex(function);
 
-        if (medianIndex == 500) {
-            double medianValue = medianValue(function);
-            double meanValue = mean(function);
+        int left = FindLeft(function);
 
-            double avg = (meanValue + medianValue) /2;
-            int close = closestIndexOf(function, avg);
+        int right = FindRight(function);
 
-            return (int)(medianIndex + close)/2;
+        double area = Area(function, left, right);
+
+
+        return XBar(function, left, right, area);
+    }
+
+    private static int FindLeft (double[] function) {
+
+
+        for (int i = 0; i < function.length; i++) {
+
+            if (function[i] > 0 ) {
+                return i;
+            }
+
+        }
+        return 0;
+    }
+
+    private static int FindRight(double[] function) {
+
+        boolean inFunction = false;
+
+        for (int i = 0; i < function.length; i++) {
+
+            if (!inFunction && function[i] != 0) {
+                inFunction = true;
+            }
+            if (inFunction && function[i] == 0) {
+                return i;
+            }
+
+        }
+        return function.length;
+    }
+
+    private static double Area(double[] function, int left, int right) {
+
+        double area = 0;
+
+        for (int i = left; i < right; i++) {
+
+            area += function[i];
+
+        }
+        return area;
+    }
+
+    private static int XBar(double[] function, int left, int right, double area) {
+
+        int sum = 0;
+
+        for (int i = left; i < right; i++) {
+
+            sum += i * function[i];
+
         }
 
-        return medianIndex;
+        return (int)(sum / area);
+
     }
 
     private static double Gauss(double x, double mu, double std) {
@@ -284,13 +336,13 @@ public class TRFuzzyLogicController {
     private static double OUTPUTL(double x) {
         if (x > 1) { x = 1;}
         if (x < 0) {x = 0;}
-        return Gauss(x, 0.10, .3);
+        return Trimf(0, .2, .45, x);
     }
 
     private static double OUTPUTH(double x) {
         if (x > 1) { x = 1;}
         if (x < 0) {x = 0;}
-        return Gauss( x, 0.99, 0.4);
+        return Trimf(.3, 1, 1.1, x);
     }
 
     private static boolean[] EvaluateRules(int hr, int rr, int tr, int sleep, int sympt) {
