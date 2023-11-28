@@ -1,4 +1,4 @@
-package com.example.Maxwell;
+package com.example.cse535;
 
 import android.os.AsyncTask;
 import android.util.Log;
