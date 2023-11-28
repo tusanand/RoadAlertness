@@ -1,4 +1,4 @@
-package com.example.Maxwell;
+package com.example.cse535;
 
 public class DistanceMatrixResult {
     private int distance;
