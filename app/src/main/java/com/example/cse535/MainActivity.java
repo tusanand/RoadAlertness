@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.reactBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ReactionTimeTestActivity.class);
+            startActivity(intent);
+        });
+
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
         binding.totalCount.setText("0");
         binding.averageHeartRate.setText("Average Heart rate: 0");
