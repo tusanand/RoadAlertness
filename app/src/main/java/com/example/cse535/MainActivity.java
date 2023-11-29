@@ -69,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
             startActivity(intent);
         });
+
+        binding.sleepBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SleepActivity.class);
+            startActivity(intent);
+        });
+
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
         binding.totalCount.setText("0");
         binding.averageHeartRate.setText("Average Heart rate: 0");

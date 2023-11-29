@@ -104,6 +104,33 @@
         app:layout_constraintEnd_toStartOf="@+id/symptomBtn"
         app:layout_constraintTop_toTopOf="@+id/symptomBtn" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/sleepBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/material_dynamic_primary95"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/symptomBtn"
+        app:layout_constraintEnd_toEndOf="@+id/symptomBtn"
+        app:srcCompat="@drawable/sleep" />
+
+    <TextView
+        android:id="@+id/sleepTitle"
+        android:layout_width="146dp"
+        android:layout_height="32dp"
+        android:text="Add Hours of Sleep"
+        android:textAlignment="textEnd"
+        android:visibility="invisible"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sleepBtn"
+        app:layout_constraintEnd_toStartOf="@+id/sleepBtn"
+        app:layout_constraintTop_toTopOf="@+id/sleepBtn" />
+
     <Button
         android:id="@+id/measureHeartRate"
         android:layout_width="339dp"
