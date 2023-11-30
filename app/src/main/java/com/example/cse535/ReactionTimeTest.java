@@ -41,7 +41,7 @@ public class ReactionTimeTest extends AppCompatActivity {
                     }
                 });
             }
-        }
+        };
     }
 
     // getters and setters

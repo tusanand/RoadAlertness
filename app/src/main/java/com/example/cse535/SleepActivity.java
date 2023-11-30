@@ -1,6 +1,7 @@
 package com.example.cse535;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +18,8 @@ public class SleepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivitySleepInputBinding binding;
 
-        final String[] hours = {"0", "1", "2", "3", "4", "5", "6", "7",
+
+        String[] hours = {"0", "1", "2", "3", "4", "5", "6", "7",
                                 "8", "9", "10", "11", "12", "13", "14"};
 
         binding = ActivitySleepInputBinding.inflate(getLayoutInflater());
@@ -29,19 +31,26 @@ public class SleepActivity extends AppCompatActivity {
         hoursAdapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.hoursAmt.setAdapter(hoursAdapt);
 
-        binding.hoursAmt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.hoursAmt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setSleepAmt(Integer.parseInt(hours[position]));
                 shareHours(getSleepAmt());
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing here if needed
+            }
         });
+
     }
 
     private void shareHours(int hours){
         ShareSleepData sleepData = ShareSleepData.getInstance();
         sleepData.setSleepHours(hours);
-        finish();
+        Log.d("tag", "" + sleepData.getSleepHours());
+        //finish();
     }
 
     // getters and setters

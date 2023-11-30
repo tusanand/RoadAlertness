@@ -174,9 +174,17 @@ public class MainActivity extends AppCompatActivity {
         if(clicked) {
             binding.symptomBtn.setVisibility(View.VISIBLE);
             binding.symptomTitle.setVisibility(View.VISIBLE);
+            binding.sleepBtn.setVisibility(View.VISIBLE);
+            binding.sleepTitle.setVisibility(View.VISIBLE);
+            binding.reactBtn.setVisibility(View.VISIBLE);
+            binding.reactTitle.setVisibility(View.VISIBLE);
         } else {
             binding.symptomBtn.setVisibility(View.INVISIBLE);
             binding.symptomTitle.setVisibility(View.INVISIBLE);
+            binding.sleepBtn.setVisibility(View.INVISIBLE);
+            binding.sleepTitle.setVisibility(View.INVISIBLE);
+            binding.reactBtn.setVisibility(View.INVISIBLE);
+            binding.reactTitle.setVisibility(View.INVISIBLE);
         }
     }
 

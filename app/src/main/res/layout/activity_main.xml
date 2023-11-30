@@ -143,8 +143,7 @@
         android:tint="@color/white"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/sleepBtn"
-        app:layout_constraintEnd_toEndOf="@+id/sleepBtn"
-        app:srcCompat="@drawable/reactTest" />
+        app:layout_constraintEnd_toEndOf="@+id/sleepBtn" />
 
     <TextView
         android:id="@+id/reactTitle"
