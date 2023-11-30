@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -83,6 +84,24 @@ public class MainActivity extends AppCompatActivity {
             openFileDialog();
         });
 
+        binding.crashChance.setOnClickListener(v -> {
+            binding.crashChance.setEnabled(false);
+            binding.crashChanceLabel.setText("Calculating...");
+
+            CrashChanceService ccs = new CrashChanceService();
+            ccs.getCrashChanceAsync("HCW", 0.05, new CrashChanceService.CrashChanceListener() {
+                @Override
+                public void onCrashChanceCalculated(String crashChance) {
+                    if (crashChance != null) {
+                        binding.crashChanceLabel.setText("Crash chance: " + crashChance);
+                        binding.crashChance.setEnabled(true);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Calculating crash chance failed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        });
+
         binding.measureRespiratoryRate.setOnClickListener(v -> {
             binding.respiratoryRateValue.setText("Calculating...");
             binding.measureRespiratoryRate.setEnabled(false);
@@ -150,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
     });
-
 
     private void onAddButtonClicked(boolean isClicked) {
         clicked = isClicked;

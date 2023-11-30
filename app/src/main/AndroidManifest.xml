@@ -46,6 +46,7 @@
 
         <service android:name=".RespiratoryRateService" />
         <service android:name=".HeartRateService" />
+        <service android:name=".CrashChanceService" />
     </application>
 
 </manifest>
