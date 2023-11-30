@@ -2,32 +2,14 @@ package com.example.cse535;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
-import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator;
-import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
-import org.apache.commons.math3.analysis.solvers.LaguerreSolver;
 import org.apache.commons.math3.ode.FirstOrderDifferentialEquations;
 import org.apache.commons.math3.ode.FirstOrderIntegrator;
-import org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaIntegrator;
-import org.apache.commons.math3.ode.nonstiff.DormandPrince54Integrator;
 import org.apache.commons.math3.ode.nonstiff.EulerIntegrator;
-import org.apache.commons.math3.ode.nonstiff.GillIntegrator;
-import org.apache.commons.math3.ode.nonstiff.LutherIntegrator;
-import org.apache.commons.math3.ode.nonstiff.MidpointIntegrator;
-import org.apache.commons.math3.ode.nonstiff.ThreeEighthesIntegrator;
 
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.BiFunction;
+
 
 public class CrashChanceService {
 
@@ -45,8 +27,8 @@ public class CrashChanceService {
 
         private double currentStep = 0;
         private double DECEL_LIM;
-        private double REACTION_TIME;
-        private CrashChanceListener listener;
+        private final double REACTION_TIME;
+        private final CrashChanceListener listener;
 
 
         public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) {
@@ -61,7 +43,7 @@ public class CrashChanceService {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return simulateCrash(0.0, 60.0, -43.8);
+            return simulateCrash(0.0, 70.0, -43.8);
         }
 
         @Override
@@ -73,7 +55,6 @@ public class CrashChanceService {
         }
 
         public String simulateCrash(double ax_initial, double vx_initial, double sx_initial) {
-            double uD = -0.1;
             ArrayList<Double> ax_record = new ArrayList<>();
             ax_record.add(ax_initial);
 
@@ -160,7 +141,7 @@ public class CrashChanceService {
 
         private double getLimit() {
             if (this.currentStep < this.REACTION_TIME) {
-                return -0.1;
+                return uD;
             } else {
                 return DECEL_LIM * 1.1;
             }
