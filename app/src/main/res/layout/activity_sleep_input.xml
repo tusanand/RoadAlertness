@@ -28,4 +28,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sleepPrompt"/>
 
+    <Button
+        android:id="@+id/saveHours"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
+        android:text="Save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hoursAmt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

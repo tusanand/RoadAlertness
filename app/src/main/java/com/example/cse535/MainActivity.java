@@ -194,18 +194,28 @@ public class MainActivity extends AppCompatActivity {
             Animation fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
             binding.symptomBtn.startAnimation(fromBottom);
             binding.symptomTitle.startAnimation(fromBottom);
+            binding.sleepBtn.startAnimation(fromBottom);
+            binding.sleepTitle.startAnimation(fromBottom);
+            binding.reactBtn.startAnimation(fromBottom);
+            binding.reactTitle.startAnimation(fromBottom);
             binding.addBtn.startAnimation(rotateOpen);
         } else {
             Animation rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
             Animation toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
             binding.symptomBtn.startAnimation(toBottom);
             binding.symptomTitle.startAnimation(toBottom);
+            binding.sleepBtn.startAnimation(toBottom);
+            binding.sleepTitle.startAnimation(toBottom);
+            binding.reactBtn.startAnimation(toBottom);
+            binding.reactTitle.startAnimation(toBottom);
             binding.addBtn.startAnimation(rotateClose);
         }
     }
 
     private void isClickable() {
         binding.symptomBtn.setClickable(clicked);
+        binding.sleepBtn.setClickable(clicked);
+        binding.reactBtn.setClickable(clicked);
     }
 
     private void getMetaData() {

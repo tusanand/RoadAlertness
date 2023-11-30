@@ -35,13 +35,15 @@ public class SleepActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setSleepAmt(Integer.parseInt(hours[position]));
-                shareHours(getSleepAmt());
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // Do nothing here if needed
             }
+        });
+
+        binding.saveHours.setOnClickListener(v -> {
+            shareHours(getSleepAmt());
         });
 
     }
@@ -50,7 +52,10 @@ public class SleepActivity extends AppCompatActivity {
         ShareSleepData sleepData = ShareSleepData.getInstance();
         sleepData.setSleepHours(hours);
         Log.d("tag", "" + sleepData.getSleepHours());
-        //finish();
+
+        if (!isFinishing()){
+            finish();
+        }
     }
 
     // getters and setters
