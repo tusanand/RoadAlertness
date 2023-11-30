@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.reactBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ReactionTimeTestActivity.class);
+            Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
             startActivity(intent);
         });
 

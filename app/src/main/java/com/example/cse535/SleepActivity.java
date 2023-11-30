@@ -32,14 +32,20 @@ public class SleepActivity extends AppCompatActivity {
         binding.hoursAmt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                shareHours(hours[position]);
+                setSleepAmt(Integer.parseInt(hours[position]));
+                shareHours(getSleepAmt());
             }
         });
     }
 
-    private void shareHours(String selected){
+    private void shareHours(int hours){
         ShareSleepData sleepData = ShareSleepData.getInstance();
-        sleepData.setSleepHours(Integer.parseInt(selected));
+        sleepData.setSleepHours(hours);
         finish();
     }
+
+    // getters and setters
+    public int getSleepAmt() {return sleepAmt;}
+    public void setSleepAmt(int sleepAmt) {this.sleepAmt = sleepAmt;}
+
 }
