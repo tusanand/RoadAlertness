@@ -98,8 +98,8 @@
         android:layout_height="32dp"
         android:text="Add Symptoms"
         android:textAlignment="textEnd"
-        android:visibility="invisible"
         android:textSize="16sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/symptomBtn"
         app:layout_constraintEnd_toStartOf="@+id/symptomBtn"
         app:layout_constraintTop_toTopOf="@+id/symptomBtn" />
@@ -191,6 +191,29 @@
         android:ems="10"
         android:inputType="text"
         android:text="Check crash?"
+        app:layout_constraintBottom_toBottomOf="@+id/crashChance"
+        app:layout_constraintStart_toEndOf="@+id/crashChance" />
+
+    <EditText
+        android:id="@+id/crashChanceInputCog"
+        android:layout_width="120dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="52dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="CogWorkload"
+        app:layout_constraintBottom_toBottomOf="@+id/crashChance"
+        app:layout_constraintStart_toStartOf="@+id/crashChance" />
+
+    <EditText
+        android:id="@+id/crashChanceInputReaction"
+        android:layout_width="131dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="52dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Reaction Time"
         app:layout_constraintBottom_toBottomOf="@+id/crashChance"
         app:layout_constraintStart_toEndOf="@+id/crashChance" />
 

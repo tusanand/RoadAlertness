@@ -9,6 +9,7 @@ import org.apache.commons.math3.ode.nonstiff.EulerIntegrator;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 
 public class CrashChanceService {
@@ -25,11 +26,14 @@ public class CrashChanceService {
         private static final double uD = -0.1;
         private static final double TIME_STEP = 0.01;
 
-        private double currentStep = 0;
         private double DECEL_LIM;
         private final double REACTION_TIME;
         private final CrashChanceListener listener;
 
+        private enum Crash {
+            WILL_NOT_CRASH,
+            WILL_CRASH
+        }
 
         public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) {
             this.REACTION_TIME = reactionTime;
@@ -43,7 +47,14 @@ public class CrashChanceService {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return simulateCrash(0.0, 70.0, -43.8);
+            double exitVal = 150.0;
+            for (double i = 20.0; i < 150; i += 10) {
+                if (simulateCrash(0.0, i, -1 * distanceBehindKmph(i)) == Crash.WILL_CRASH) {
+                    exitVal = i;
+                    break;
+                }
+            }
+            return String.valueOf(exitVal);
         }
 
         @Override
@@ -54,7 +65,19 @@ public class CrashChanceService {
             }
         }
 
-        public String simulateCrash(double ax_initial, double vx_initial, double sx_initial) {
+        public static double distanceBehindKmph(double speedKmph) {
+            // Convert time from seconds to hours
+            double timeHours = 3.5 / 3600.0;
+
+            // Calculate the distance using the formula: Distance = Speed * Time
+            double distanceMeters = speedKmph * timeHours * 1000;
+
+            return distanceMeters;
+        }
+
+        public Crash simulateCrash(double ax_initial, double vx_initial, double sx_initial) {
+            double currentStep = 0;
+
             ArrayList<Double> ax_record = new ArrayList<>();
             ax_record.add(ax_initial);
 
@@ -68,7 +91,7 @@ public class CrashChanceService {
             ArrayList<Double> decelLim_record = new ArrayList<>();
 
             while (vx_record.get(vx_record.size() - 1) > 0.000001) {
-                decelLim_record.add(getLimit());
+                decelLim_record.add(getLimit(currentStep));
                 jerk_record.add(calcJerk(
                         decelLim_record.get(decelLim_record.size() - 1),
                         sx_record.get(sx_record.size() - 1),
@@ -96,9 +119,9 @@ public class CrashChanceService {
 
             if(sx_record.get(sx_record.size() - 1) > 0)
             {
-                return "Crash";
+                return Crash.WILL_CRASH;
             }
-            return "No Crash";
+            return Crash.WILL_NOT_CRASH;
         }
 
         public static double customIntegrate(double[] values, double initial_value, double timeStep) {
@@ -139,8 +162,8 @@ public class CrashChanceService {
             return decelLim - 0.01 * sx - 0.3 * vx - 0.5 * ax;
         }
 
-        private double getLimit() {
-            if (this.currentStep < this.REACTION_TIME) {
+        private double getLimit(double currentStep) {
+            if (currentStep < this.REACTION_TIME) {
                 return uD;
             } else {
                 return DECEL_LIM * 1.1;
