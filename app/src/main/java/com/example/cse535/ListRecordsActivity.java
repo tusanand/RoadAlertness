@@ -27,15 +27,19 @@ public class ListRecordsActivity extends AppCompatActivity {
     private static final String COUGH = "cough";
     private static final String BREATHLESSNESS = "breathlessness";
     private static final String TIRED = "tired";
+    private static final String SLEEP = "sleep";
+    private static final String RESPONSE = "response";
 
-    private ArrayList<String> id, heartRate, respiratoryRate, nausea, headache, diarrhea, soarThroat, fever, muscleAche, noSmellTaste, cough, breathlessness, tired;
+    private static final String REACTION_TIME = "reaction_time";
+
+    private ArrayList<String> id, heartRate, respiratoryRate, nausea, headache, diarrhea, soarThroat, fever, muscleAche, noSmellTaste, cough, breathlessness, tired, sleepRate, response, reactionTime;
 
     private ListRecordsAdapter listRecordsAdapter;
 
     @Override
     protected void onResume() {
         super.onResume();
-        getAllRecords();
+        getAllMetrics();
     }
 
     @Override
@@ -59,6 +63,9 @@ public class ListRecordsActivity extends AppCompatActivity {
         cough = new ArrayList<>();
         breathlessness = new ArrayList<>();
         tired = new ArrayList<>();
+        sleepRate = new ArrayList<>();
+        response = new ArrayList<>();
+        reactionTime = new ArrayList<>();
 
         listRecordsAdapter = new ListRecordsAdapter(
                 ListRecordsActivity.this,
@@ -74,13 +81,16 @@ public class ListRecordsActivity extends AppCompatActivity {
                 noSmellTaste,
                 cough,
                 breathlessness,
-                tired
+                tired,
+                sleepRate,
+                response,
+                reactionTime
         );
         binding.recyclerView.setAdapter(listRecordsAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(ListRecordsActivity.this));
     }
 
-    private void getAllRecords() {
+    private void getAllMetrics() {
         Cursor cursor = myDatabaseHelper.getAllRecords();
 
         if (cursor != null) {
@@ -97,6 +107,9 @@ public class ListRecordsActivity extends AppCompatActivity {
             int coughIndex = cursor.getColumnIndex(COUGH);
             int breathlessnessIndex = cursor.getColumnIndex(BREATHLESSNESS);
             int tiredIndex = cursor.getColumnIndex(TIRED);
+            int sleepIndex = cursor.getColumnIndex(SLEEP);
+            int responseIndex = cursor.getColumnIndex(RESPONSE);
+            int reactionIndex = cursor.getColumnIndex(REACTION_TIME);
 
             while (cursor.moveToNext()) {
                 if(idIndex != -1) {
@@ -137,6 +150,15 @@ public class ListRecordsActivity extends AppCompatActivity {
                 }
                 if (tiredIndex != -1) {
                     tired.add(cursor.getString(tiredIndex));
+                }
+                if(sleepIndex != -1) {
+                    sleepRate.add(cursor.getString(sleepIndex));
+                }
+                if(responseIndex != -1) {
+                    response.add(cursor.getString(responseIndex));
+                }
+                if(reactionIndex != -1) {
+                    reactionTime.add(cursor.getString(reactionIndex));
                 }
             }
             cursor.close();
