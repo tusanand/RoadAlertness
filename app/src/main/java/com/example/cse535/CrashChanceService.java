@@ -4,6 +4,7 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.ode.FirstOrderDifferentialEquations;
 import org.apache.commons.math3.ode.FirstOrderIntegrator;
+import org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaIntegrator;
 import org.apache.commons.math3.ode.nonstiff.EulerIntegrator;
 
 import android.os.AsyncTask;
@@ -17,7 +18,7 @@ public class CrashChanceService {
     public CrashChanceService() {
     }
 
-    public void getCrashChanceAsync(String cogWorkload, double reactionTime, CrashChanceListener listener) {
+    public void getCrashChanceAsync(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
         new CrashChanceTask(cogWorkload, reactionTime, listener).execute();
     }
 
@@ -35,14 +36,14 @@ public class CrashChanceService {
             WILL_CRASH
         }
 
-        public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) {
-            this.REACTION_TIME = reactionTime;
+        public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
             this.listener = listener;
 
+            if (reactionTime <= 0) throw new Exception();
+            this.REACTION_TIME = reactionTime;
+
             this.DECEL_LIM = -150.0;
-            if (cogWorkload.equals("LCW")) {
-                this.DECEL_LIM = -200.0;
-            }
+            if (cogWorkload.equals("LCW")) this.DECEL_LIM = -200.0;
         }
 
         @Override
@@ -146,7 +147,7 @@ public class CrashChanceService {
                     yDot[0] = valueFunc.value(t);
                 }
             };
-            FirstOrderIntegrator integrator = new EulerIntegrator(timeStep);
+            FirstOrderIntegrator integrator = new ClassicalRungeKuttaIntegrator(timeStep);
 
             double[] y0 = {initial_value};
             integrator.integrate(ode, 0, y0, (values.length - 1) * timeStep, y0);
