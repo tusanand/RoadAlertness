@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cse535.databinding.ActivityReactionTestBinding;
 
+import org.json.JSONObject;
+
 public class ReactionTestUIActivity extends AppCompatActivity{
 
     // initialize variables
@@ -36,8 +38,10 @@ public class ReactionTestUIActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int reqCode, int resCode, @Nullable Intent data){
         super.onActivityResult(reqCode, resCode, data);
+        Log.d("ActivityResult", "onActivityResult called with requestCode: " + reqCode + ", resultCode: " + resCode);
         if (reqCode == 1 && resCode == Activity.RESULT_OK && data != null){
             double rtime = data.getDoubleExtra("reactionTime", 0.0);
+            Log.d("ActivityResult", "Received reaction time: " + rtime);
             setReactionTime(rtime);
             Log.d("reactionTime", "" + getReactionTime());
         }

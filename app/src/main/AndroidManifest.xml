@@ -21,6 +21,16 @@
             android:label="Sleep Activity"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".ReactionTestUIActivity"
+            android:exported="false"
+            android:label="Reaction Time UI Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ReactionTimeTest"
+            android:exported="false"
+            android:label="Reaction Time Test Activity"
+            android:parentActivityName=".ReactionTestUIActivity" />
+        <activity
             android:name=".TrafficConditionsActivity"
             android:exported="false" />
         <activity

@@ -22,24 +22,58 @@ public class ReactionTimeTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityReactionTimeBinding binding;
 
+        Log.d("ReactionTimeTest", "onCreate called");
+
         binding = ActivityReactionTimeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         handler = new Handler();
+        startTest(binding);
     }
 
     public void startTest(ActivityReactionTimeBinding binding){
-        binding.purpleCircle.setVisibility(View.VISIBLE);
-
+        Log.d("ReactionTimeTest", "startTest called");
         // get dimensions of screen area below display
-        int screenW = binding.getRoot().getWidth();
-        int screenH = binding.getRoot().getHeight();
+        int screenW = binding.testView.getWidth();
+        int screenH = binding.testView.getHeight();
+
+        Log.d("REACTION", ""  + screenW);
+        Log.d("REACTION", "" + screenH);
+
+        /*if (screenW <= 0 || screenH <= 0) {
+            // Handle the case where screen dimensions are not positive
+            return;
+        }*/
+
+        new CountDownTimer(3000, 1000){
+            public void onTick(long remaining){
+                Log.d("tick", "" + remaining);
+                long secondsRemaining = remaining / 1000;
+                binding.timerDisplay.setText("Seconds Remaining: " + secondsRemaining);
+            }
+
+            public void onFinish(){
+                Log.d("REACTION", "finish");
+                // Do nothing here; the timer has finished, but we still want the click listener to work
+
+                // Set the click listener here to ensure it's applied for each round
+                setClickListener(binding);
+            }
+        }.start();
+
+        // Set the click listener initially
+        //setClickListener(binding);
+    }
+
+    private void setClickListener(ActivityReactionTimeBinding binding) {
+        long start = System.currentTimeMillis();
+        binding.purpleCircle.setVisibility(View.VISIBLE);
 
         // calculate random coordinates for purple dot
         Random random = new Random();
-        int dotX = random.nextInt(screenW - binding.purpleCircle.getWidth());
-        int dotY = random.nextInt(screenH - binding.purpleCircle.getHeight());
-        if (dotY < 36){
+        int dotX = random.nextInt(Math.max(1, 600 - binding.purpleCircle.getWidth()));
+        int dotY = random.nextInt(Math.max(1, 600 - binding.purpleCircle.getHeight()));
+        if (dotY < 36) {
             dotY = 36;
         }
 
@@ -47,29 +81,28 @@ public class ReactionTimeTest extends AppCompatActivity {
         binding.purpleCircle.setX((float) dotX);
         binding.purpleCircle.setY((float) dotY);
 
-        new CountDownTimer(3000, 1000){
-            public void onTick(long remaining){
-                binding.timerDisplay.setText("Seconds Remaining: " + remaining);
+        Log.d("REACTION", "" + dotX);
+        Log.d("REACTION", "" + dotY);
+
+        // Set the click listener
+        binding.purpleCircle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long end = System.currentTimeMillis();
+                long rt = (end - (start - 3000)) / 1000;
+                setTime((double) rt);
+
+                resetTest(binding);
+
+                Intent resIntent = new Intent();
+                resIntent.putExtra("reactionTime", getTime());
+                setResult(Activity.RESULT_OK, resIntent);
+
+                // Log intent information
+                Log.d("Intent", "Reaction time: " + getTime());
+                Log.d("Intent", "Intent data: " + resIntent.toString());
             }
-
-            public void onFinish(){
-                long start = System.currentTimeMillis();
-                binding.purpleCircle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        long end = System.currentTimeMillis();
-                        long rt = (end - start) / 1000;
-                        setTime((double) rt);
-
-                        resetTest(binding);
-
-                        Intent resIntent = new Intent();
-                        resIntent.putExtra("reactionTime", getTime());
-                        setResult(Activity.RESULT_OK, resIntent);
-                    }
-                });
-            }
-        }.start();
+        });
     }
 
     private void resetTest(ActivityReactionTimeBinding binding){
