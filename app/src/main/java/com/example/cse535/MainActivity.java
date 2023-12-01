@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
             ShareSleepData shareSleepData = ShareSleepData.getInstance();
+            ShareReactionTimeData shareReactionTimeData = ShareReactionTimeData.getInstance();
             myDatabaseHelper.saveRecord(
                     heartRateValue,
                     respiratoryRateValue,
@@ -124,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getBreathlessness(),
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
-                    shareSleepData.getSleepHours()
+                    shareSleepData.getSleepHours(),
+                    shareReactionTimeData.getReactionTime()
             );
             getMetaData();
         });

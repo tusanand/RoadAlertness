@@ -143,7 +143,8 @@
         android:tint="@color/white"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/sleepBtn"
-        app:layout_constraintEnd_toEndOf="@+id/sleepBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/sleepBtn"
+        app:srcCompat="@drawable/timer"/>
 
     <TextView
         android:id="@+id/reactTitle"
