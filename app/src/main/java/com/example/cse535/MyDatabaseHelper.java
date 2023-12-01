@@ -31,8 +31,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String BREATHLESSNESS = "breathlessness";
     private static final String TIRED = "tired";
     private static final String COMPUTED_SYMPTOMS = "computed_symptoms";
-
-
+    private static final String SLEEP_HOURS = "sleep_hours";
+    // private static final String REACTION_TIME = "reaction_time";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,7 +55,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + COUGH + " INTEGER CHECK (" + COUGH + " >= 0 AND " + COUGH + " <= 5), "
                 + BREATHLESSNESS + " INTEGER CHECK (" + BREATHLESSNESS + " >= 0 AND " + BREATHLESSNESS + " <= 5), "
                 + TIRED + " INTEGER CHECK (" + TIRED + " >= 0 AND " + TIRED + " <= 5), "
-                + COMPUTED_SYMPTOMS + " DECIMAL"
+                + COMPUTED_SYMPTOMS + "DECIMAL, "
+                + SLEEP_HOURS + " INTEGER"
                 + ");";
         db.execSQL(query);
     }
@@ -79,7 +80,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             int cough,
             int breathlessness,
             int tired,
-            double computedSymptoms
+            double computedSymptoms,
+            int sleepAmt
             ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -97,6 +99,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(BREATHLESSNESS, breathlessness);
         cv.put(TIRED, tired);
         cv.put(COMPUTED_SYMPTOMS, computedSymptoms);
+        cv.put(SLEEP_HOURS, sleepAmt);
 
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1) {

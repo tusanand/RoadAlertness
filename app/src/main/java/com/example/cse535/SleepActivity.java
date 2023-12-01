@@ -39,6 +39,7 @@ public class SleepActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // Do nothing here if needed
+                setSleepAmt(Integer.parseInt(hours[0]));
             }
         });
 

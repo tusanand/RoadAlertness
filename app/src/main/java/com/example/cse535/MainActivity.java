@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
+            ShareSleepData shareSleepData = ShareSleepData.getInstance();
             myDatabaseHelper.saveRecord(
                     heartRateValue,
                     respiratoryRateValue,
@@ -122,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getCough(),
                     shareSymptomsData.getBreathlessness(),
                     shareSymptomsData.getTired(),
-                    shareSymptomsData.getSymptomComputedEffect()
+                    shareSymptomsData.getSymptomComputedEffect(),
+                    shareSleepData.getSleepHours()
             );
             getMetaData();
         });

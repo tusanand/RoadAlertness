@@ -219,22 +219,12 @@
         android:id="@+id/save"
         android:layout_width="180dp"
         android:layout_height="43dp"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="112dp"
         android:layout_marginTop="44dp"
         android:text="Save Record"
         app:cornerRadius="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measureRespiratoryRate" />
 
-    <Button
-        android:id="@+id/saveSleep"
-        android:layout_width="180dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="8dp"
-        android:text="Save Hours of Sleep"
-        app:cornerRadius="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
