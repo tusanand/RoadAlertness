@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ListRecordsAdapter extends RecyclerView.Adapter<ListRecordsAdapter.MyViewHolder> {
 
     private final Context context;
-    private final ArrayList<String> id, heartRate, respiratoryRate, nausea, headache, diarrhea, soarThroat, fever, muscleAche, noSmellTaste, cough, breathlessness, tired;
+    private final ArrayList<String> id, heartRate, respiratoryRate, sleepRate, response, nausea, headache, diarrhea, soarThroat, fever, muscleAche, noSmellTaste, cough, breathlessness, tired, reactionTime;
     ListRecordsAdapter(
             Context context,
             ArrayList<String> id,
@@ -33,13 +33,18 @@ public class ListRecordsAdapter extends RecyclerView.Adapter<ListRecordsAdapter.
             ArrayList<String> noSmellTaste,
             ArrayList<String> cough,
             ArrayList<String> breathlessness,
-            ArrayList<String> tired
+            ArrayList<String> tired,
+            ArrayList<String> sleepRate,
+            ArrayList<String> response,
+            ArrayList<String> reactionTime
     ) {
 
         this.context = context;
         this.id = id;
         this.heartRate = heartRate;
         this.respiratoryRate = respiratoryRate;
+        this.sleepRate = sleepRate;
+        this.response = response;
         this.nausea = nausea;
         this.headache = headache;
         this.diarrhea = diarrhea;
@@ -50,6 +55,7 @@ public class ListRecordsAdapter extends RecyclerView.Adapter<ListRecordsAdapter.
         this.cough = cough;
         this.breathlessness = breathlessness;
         this.tired = tired;
+        this.reactionTime = reactionTime;
     }
 
     @NonNull
@@ -67,7 +73,7 @@ public class ListRecordsAdapter extends RecyclerView.Adapter<ListRecordsAdapter.
 
     @Override
     public int getItemCount() {
-        return heartRate.size();
+        return respiratoryRate.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -82,6 +88,9 @@ public class ListRecordsAdapter extends RecyclerView.Adapter<ListRecordsAdapter.
             binding.recordId.setText(id.get(position));
             binding.heartRate.setText("Heart rate: " + Integer.parseInt(heartRate.get(position)));
             binding.respiratoryRate.setText("Respiratory rate: " + Integer.parseInt(respiratoryRate.get(position)));
+            binding.sleepRate.setText("Sleep Rate: " +Integer.parseInt(sleepRate.get(position)));
+            binding.response.setText("Recommendation: "+response.get(position));
+            binding.reactionTime.setText("Reaction time: " +Integer.parseInt(reactionTime.get(position)));
             binding.cardViewListRecycler.setOnClickListener(v -> {
                 Intent intent = new Intent(context, ViewSymptomsActivity.class);
 

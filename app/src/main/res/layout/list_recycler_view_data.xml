@@ -14,7 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="177dp"
             android:background="@drawable/cardview_background_selector"
             android:padding="12dp">
 
@@ -29,6 +29,7 @@
                 app:layout_constraintStart_toEndOf="@+id/recordId"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <TextView
                 android:id="@+id/respiratoryRate"
                 android:layout_width="wrap_content"
@@ -39,19 +40,22 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/heartRate"
-                app:layout_constraintTop_toBottomOf="@+id/heartRate" />
+                app:layout_constraintTop_toBottomOf="@+id/heartRate"
+                app:layout_constraintVertical_bias="0.019" />
 
             <TextView
                 android:id="@+id/viewSymptoms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="64dp"
-                android:text="Info"
+                android:layout_marginEnd="40dp"
+                android:text="View Symptoms"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/heartRate"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.277" />
+                app:layout_constraintVertical_bias="0.036" />
 
             <TextView
                 android:id="@+id/recordId"
@@ -65,6 +69,35 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/response"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="You have a fast reaction time. We recommend using your personal car for this very long trip."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/sleepRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Sleep Rate: 1.0"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/respiratoryRate"
+                app:layout_constraintTop_toBottomOf="@+id/respiratoryRate"/>
+
+            <TextView
+                android:id="@+id/reactionTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Reaction time: 1.0"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/sleepRate"
+                app:layout_constraintTop_toBottomOf="@+id/sleepRate"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
