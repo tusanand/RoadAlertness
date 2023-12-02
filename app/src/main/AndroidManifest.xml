@@ -31,6 +31,9 @@
             android:label="Reaction Time Test Activity"
             android:parentActivityName=".ReactionTestUIActivity" />
         <activity
+            android:name=".FuzzyTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".TrafficConditionsActivity"
             android:exported="false" />
         <activity
