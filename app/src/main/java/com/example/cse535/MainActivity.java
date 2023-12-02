@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private int heartRateValue = 0;
     private int respiratoryRateValue = 0;
 
-    private int sleepRateValue = 8;
     private int reactionValue = 10;
     private String response = "You have a fast reaction time. We recommend using your personal car for this very long trip.";
 
@@ -68,16 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.symptomBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
-            startActivity(intent);
-        });
-
-        binding.sleepBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SleepActivity.class);
-            startActivity(intent);
-        });
-
-        binding.reactBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
             startActivity(intent);
         });
 
@@ -128,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
-            ShareSleepData shareSleepData = ShareSleepData.getInstance();
             ShareReactionTimeData shareReactionTimeData = ShareReactionTimeData.getInstance();
             myDatabaseHelper.saveRecord(
                     heartRateValue,
@@ -144,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getBreathlessness(),
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
-                    shareSleepData.getSleepHours(),
+                    Integer.parseInt(String.valueOf(binding.sleepRate.getText())),
                     response,
                     shareReactionTimeData.getReactionTime()
             );
