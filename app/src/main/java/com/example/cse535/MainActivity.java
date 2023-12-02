@@ -70,6 +70,17 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
             startActivity(intent);
         });
+
+        binding.sleepBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SleepActivity.class);
+            startActivity(intent);
+        });
+
+        binding.reactBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
+            startActivity(intent);
+        });
+
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
 
 
@@ -117,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
+            ShareSleepData shareSleepData = ShareSleepData.getInstance();
+            ShareReactionTimeData shareReactionTimeData = ShareReactionTimeData.getInstance();
             myDatabaseHelper.saveRecord(
                     heartRateValue,
                     respiratoryRateValue,
@@ -131,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getBreathlessness(),
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
-                    sleepRateValue,
+                    shareSleepData.getSleepHours(),
                     response,
-                    reactionValue
+                    shareReactionTimeData.getReactionTime()
             );
         });
     }
