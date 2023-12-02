@@ -3,8 +3,10 @@ package com.example.cse535;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,8 +33,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String BREATHLESSNESS = "breathlessness";
     private static final String TIRED = "tired";
     private static final String COMPUTED_SYMPTOMS = "computed_symptoms";
-    private static final String SLEEP_HOURS = "sleep_hours";
+    private static final String SLEEP = "sleep";
+    private static final String RESPONSE = "response";
     private static final String REACTION_TIME = "reaction_time";
+
+
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,9 +60,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + COUGH + " INTEGER CHECK (" + COUGH + " >= 0 AND " + COUGH + " <= 5), "
                 + BREATHLESSNESS + " INTEGER CHECK (" + BREATHLESSNESS + " >= 0 AND " + BREATHLESSNESS + " <= 5), "
                 + TIRED + " INTEGER CHECK (" + TIRED + " >= 0 AND " + TIRED + " <= 5), "
-                + COMPUTED_SYMPTOMS + "DECIMAL, "
-                + SLEEP_HOURS + "INTEGER, "
-                + REACTION_TIME + " DECIMAL"
+                + COMPUTED_SYMPTOMS + " DECIMAL, "
+                + SLEEP + " INTEGER,"
+                + RESPONSE + " TEXT, "
+                + REACTION_TIME + " INTEGER"
                 + ");";
         db.execSQL(query);
     }
@@ -82,9 +88,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             int breathlessness,
             int tired,
             double computedSymptoms,
-            int sleepAmt,
-            double reactionTime
-            ) {
+            int sleep,
+            String response,
+            int reaction_time
+    ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -101,27 +108,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(BREATHLESSNESS, breathlessness);
         cv.put(TIRED, tired);
         cv.put(COMPUTED_SYMPTOMS, computedSymptoms);
-        cv.put(SLEEP_HOURS, sleepAmt);
-        cv.put(REACTION_TIME, reactionTime);
+        cv.put(SLEEP, sleep);
+        cv.put(RESPONSE, response);
+        cv.put(REACTION_TIME,reaction_time);
 
         long result = db.insert(TABLE_NAME, null, cv);
-        if(result == -1) {
+
+        if (result == -1) {
             Toast.makeText(context, "Record was not saved", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Record saved successfully", Toast.LENGTH_SHORT).show();
         }
+
     }
 
-    public Cursor getRecordsMetaData() {
-        String query = "SELECT AVG(" + HEART_RATE + ") as avg_heart_rate, AVG(" + RESPIRATORY_RATE + ") as avg_respiratory_rate, COUNT(*) as total_records " +
-                "FROM " + TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if(db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
+
 
     public Cursor getAllRecords() {
         String query = "SELECT * FROM " + TABLE_NAME;

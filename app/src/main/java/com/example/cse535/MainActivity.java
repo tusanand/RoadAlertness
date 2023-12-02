@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private int heartRateValue = 0;
     private int respiratoryRateValue = 0;
 
+    private int sleepRateValue = 8;
+    private int reactionValue = 10;
+    private String response = "You have a fast reaction time. We recommend using your personal car for this very long trip.";
+
     private BroadcastReceiver respiratoryRateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -46,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver(respiratoryRateReceiver, new IntentFilter("respiratory_rate_calculated"));
-        getMetaData();
-        onAddButtonClicked(false);
     }
 
     @Override
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.addBtn.setOnClickListener(view -> onAddButtonClicked(!clicked));
 
         binding.symptomBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
@@ -81,29 +82,47 @@ public class MainActivity extends AppCompatActivity {
         });
 
         myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
-        binding.totalCount.setText("0");
-        binding.averageHeartRate.setText("Average Heart rate: 0");
-        binding.averageRespiratoryRate.setText("Average Respiratory rate: 0");
 
-        binding.cardView.setOnClickListener(v -> {
+
+        binding.viewResponse.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ListRecordsActivity.class);
             startActivity(intent);
         });
 
         binding.measureHeartRate.setOnClickListener(v -> {
-            openFileDialog();
+            binding.heartRateValue.setText("Calculating...");
+            binding.measureHeartRate.setEnabled(false);
+//            Intent intent = new Intent(MainActivity.this, HeartRateService.class);
+//            startService(intent);
+            heartRateValue = 72;
+            binding.heartRateValue.setText("Heart rate: " + heartRateValue); //Setting dummy value
         });
 
         binding.measureRespiratoryRate.setOnClickListener(v -> {
             binding.respiratoryRateValue.setText("Calculating...");
             binding.measureRespiratoryRate.setEnabled(false);
-            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
-            startService(intent);
+
+//            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
+//            startService(intent);
+
+            respiratoryRateValue = 93; //setting dummy value
+            binding.respiratoryRateValue.setText("Respiratory rate: " + respiratoryRateValue);
         });
 
-        binding.gotoMapBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
-            startActivity(intent);
+        binding.reactionBtn.setOnClickListener(v -> {
+            binding.reactionTime.setText("Calculating...");
+            binding.reactionBtn.setEnabled(false);
+
+//            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
+//            startService(intent);
+
+            reactionValue = 93; //setting dummy value
+            binding.reactionTime.setText("Reaction Time: " + reactionValue);
+        });
+
+        binding.responseBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
+//            startActivity(intent);
         });
 
         binding.save.setOnClickListener(v -> {
@@ -126,110 +145,13 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
                     shareSleepData.getSleepHours(),
+                    response,
                     shareReactionTimeData.getReactionTime()
             );
-            getMetaData();
         });
     }
-    public void openFileDialog() {
-        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        data.setType("video/*");
-        data = Intent.createChooser(data, "Select file");
-        mGetContent.launch(data);
-    }
-
-    ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-        new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult activityResult) {
-                if(activityResult.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = activityResult.getData();
-                    Uri uri = data.getData();
-
-                    HeartRateService heartRateService = new HeartRateService();
-                    binding.heartRateValue.setText("Calculating...");
-                    binding.heartRateValue.setEnabled(false);
-                    Toast.makeText(MainActivity.this, "Service started.", Toast.LENGTH_SHORT).show();
-                    heartRateService.getHeartRateAsync(MainActivity.this, uri, new HeartRateService.HeartRateListener() {
-                        @Override
-                        public void onHeartRateCalculated(String heartRate) {
-                            if (heartRate != null) {
-                                heartRateValue = Integer.parseInt(heartRate);
-                                binding.heartRateValue.setText("Heart rate: " + heartRateValue);
-                                binding.heartRateValue.setEnabled(true);
-                            } else {
-                                Toast.makeText(MainActivity.this, "Heart rate calculation failed.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-    });
 
 
-    private void onAddButtonClicked(boolean isClicked) {
-        clicked = isClicked;
-        setVisibility();
-        setAnimation();
-        isClickable();
-    }
 
-    private void setVisibility() {
-        if(clicked) {
-            binding.symptomBtn.setVisibility(View.VISIBLE);
-            binding.symptomTitle.setVisibility(View.VISIBLE);
-            binding.sleepBtn.setVisibility(View.VISIBLE);
-            binding.sleepTitle.setVisibility(View.VISIBLE);
-            binding.reactBtn.setVisibility(View.VISIBLE);
-            binding.reactTitle.setVisibility(View.VISIBLE);
-        } else {
-            binding.symptomBtn.setVisibility(View.INVISIBLE);
-            binding.symptomTitle.setVisibility(View.INVISIBLE);
-            binding.sleepBtn.setVisibility(View.INVISIBLE);
-            binding.sleepTitle.setVisibility(View.INVISIBLE);
-            binding.reactBtn.setVisibility(View.INVISIBLE);
-            binding.reactTitle.setVisibility(View.INVISIBLE);
-        }
-    }
 
-    private void setAnimation() {
-        if(clicked) {
-            Animation rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
-            Animation fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
-            binding.symptomBtn.startAnimation(fromBottom);
-            binding.symptomTitle.startAnimation(fromBottom);
-            binding.sleepBtn.startAnimation(fromBottom);
-            binding.sleepTitle.startAnimation(fromBottom);
-            binding.reactBtn.startAnimation(fromBottom);
-            binding.reactTitle.startAnimation(fromBottom);
-            binding.addBtn.startAnimation(rotateOpen);
-        } else {
-            Animation rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
-            Animation toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
-            binding.symptomBtn.startAnimation(toBottom);
-            binding.symptomTitle.startAnimation(toBottom);
-            binding.sleepBtn.startAnimation(toBottom);
-            binding.sleepTitle.startAnimation(toBottom);
-            binding.reactBtn.startAnimation(toBottom);
-            binding.reactTitle.startAnimation(toBottom);
-            binding.addBtn.startAnimation(rotateClose);
-        }
-    }
-
-    private void isClickable() {
-        binding.symptomBtn.setClickable(clicked);
-        binding.sleepBtn.setClickable(clicked);
-        binding.reactBtn.setClickable(clicked);
-    }
-
-    private void getMetaData() {
-        Cursor cursor = myDatabaseHelper.getRecordsMetaData();
-
-        if(cursor != null && cursor.moveToFirst()) {
-            binding.averageHeartRate.setText("Average Heart rate: " + String.format("%.3f", cursor.getDouble(0)));
-            binding.averageRespiratoryRate.setText("Average Respiratory rate: " +  String.format("%.3f", cursor.getDouble(1)));
-            binding.totalCount.setText(String.valueOf(cursor.getInt(2)));
-            cursor.close();
-        }
-    }
 }

@@ -24,208 +24,155 @@
             android:background="@drawable/cardview_background_selector"
             android:padding="12dp">
 
-            <TextView
-                android:id="@+id/totalCount"
-                android:layout_width="153dp"
-                android:layout_height="59dp"
-                android:layout_marginStart="4dp"
-                android:text="1"
-                android:textAlignment="textStart"
-                android:textSize="50sp"
-                android:textStyle="bold"
+
+
+
+
+            <Button
+                android:id="@+id/viewResponse"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:text="View Progress"
+                tools:layout_editor_absoluteX="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.466" />
-
-            <TextView
-                android:id="@+id/averageHeartRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:text="Average Heart Rate: 0.0"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/averageRespiratoryRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Average Respiratory rate: 0.0"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/averageHeartRate"
-                app:layout_constraintTop_toBottomOf="@+id/averageHeartRate" />
-
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="28dp"
-        android:clickable="true"
-        android:contentDescription="Add health data"
-        android:focusable="true"
-        android:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_add" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/symptomBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/material_dynamic_primary95"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/addBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addBtn"
-        app:srcCompat="@drawable/symptom" />
-
-    <TextView
-        android:id="@+id/symptomTitle"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
-        android:text="Add Symptoms"
-        android:textAlignment="textEnd"
-        android:visibility="invisible"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/symptomBtn"
-        app:layout_constraintEnd_toStartOf="@+id/symptomBtn"
-        app:layout_constraintTop_toTopOf="@+id/symptomBtn" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sleepBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/material_dynamic_primary95"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/symptomBtn"
-        app:layout_constraintEnd_toEndOf="@+id/symptomBtn"
-        app:srcCompat="@drawable/sleep" />
-
-    <TextView
-        android:id="@+id/sleepTitle"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
-        android:text="Add Hours of Sleep"
-        android:textAlignment="textEnd"
-        android:visibility="invisible"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sleepBtn"
-        app:layout_constraintEnd_toStartOf="@+id/sleepBtn"
-        app:layout_constraintTop_toTopOf="@+id/sleepBtn" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/reactBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/material_dynamic_primary95"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/sleepBtn"
-        app:layout_constraintEnd_toEndOf="@+id/sleepBtn"
-        app:srcCompat="@drawable/timer"/>
-
-    <TextView
-        android:id="@+id/reactTitle"
-        android:layout_width="146dp"
-        android:layout_height="32dp"
-        android:text="Test Reaction Time"
-        android:textAlignment="textEnd"
-        android:visibility="invisible"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/reactBtn"
-        app:layout_constraintEnd_toStartOf="@+id/reactBtn"
-        app:layout_constraintTop_toTopOf="@+id/reactBtn" />
-
-    <Button
-        android:id="@+id/measureHeartRate"
-        android:layout_width="339dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
-        android:text="Measure Heart rate"
-        app:cornerRadius="5sp"
-        app:layout_constraintEnd_toEndOf="@+id/heartRateValue"
-        app:layout_constraintHorizontal_bias="0.392"
-        app:layout_constraintStart_toStartOf="@+id/heartRateValue"
-        app:layout_constraintTop_toBottomOf="@+id/heartRateValue" />
 
     <TextView
         android:id="@+id/heartRateValue"
         android:layout_width="335dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="56dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:text="Heart rate: 0"
-        android:textSize="25sp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/respiratoryRateValue"
+        android:layout_width="335dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Respiratory rate: 0"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/measureHeartRate" />
+
+    <Button
+        android:id="@+id/symptomBtn"
+        android:layout_width="339dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:text="Add Symptoms"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="@+id/sleepRateValue"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/sleepRateValue"
+        app:layout_constraintTop_toBottomOf="@+id/sleepRateValue" />
+
+    <Button
+        android:id="@+id/responseBtn"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:text="Recomendations"
+        app:cornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="@+id/save"
+        app:layout_constraintTop_toBottomOf="@+id/save" />
+
+    <Button
+        android:id="@+id/reactionBtn"
+        android:layout_width="339dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:text="Measure Reaction Time"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="@+id/reactionTime"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/reactionTime"
+        app:layout_constraintTop_toBottomOf="@+id/reactionTime" />
+
+    <EditText
+        android:id="@+id/sleepRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="60dp"
+        android:ems="12"
+        android:hint="Enter sleep hours"
+        android:inputType="text"
+        android:text="08"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/measureRespiratoryRate"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toEndOf="@+id/sleepRateValue"
+        app:layout_constraintTop_toTopOf="@+id/measureRespiratoryRate" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Save Record"
+        app:cornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reactionBtn" />
+
+    <TextView
+        android:id="@+id/sleepRateValue"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Sleep hours"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/measureRespiratoryRate"
+        app:layout_constraintTop_toBottomOf="@+id/measureRespiratoryRate" />
+
+    <Button
+        android:id="@+id/measureHeartRate"
+        android:layout_width="339dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:text="Measure Heart rate"
+        app:cornerRadius="5sp"
+        app:layout_constraintEnd_toEndOf="@+id/heartRateValue"
+        app:layout_constraintStart_toStartOf="@+id/heartRateValue"
+        app:layout_constraintTop_toBottomOf="@+id/heartRateValue" />
+
+    <TextView
+        android:id="@+id/reactionTime"
+        android:layout_width="335dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="Reaction Time: 0"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/symptomBtn" />
 
     <Button
         android:id="@+id/measureRespiratoryRate"
         android:layout_width="339dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
         android:text="Measure Respiratory rate"
         app:cornerRadius="5sp"
         app:layout_constraintEnd_toEndOf="@+id/respiratoryRateValue"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/respiratoryRateValue"
         app:layout_constraintTop_toBottomOf="@+id/respiratoryRateValue" />
-
-    <TextView
-        android:id="@+id/respiratoryRateValue"
-        android:layout_width="335dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="52dp"
-        android:text="Respiratory rate: 0"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measureHeartRate" />
-
-    <Button
-        android:id="@+id/gotoMapBtn"
-        android:layout_width="84dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="28dp"
-        android:text="Map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.883"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="180dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="44dp"
-        android:text="Save Record"
-        app:cornerRadius="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measureRespiratoryRate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
