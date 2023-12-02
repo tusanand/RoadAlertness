@@ -3,7 +3,7 @@ package com.example.cse535;
 public class ShareReactionTimeData {
     private static ShareReactionTimeData reactionTimeData;
 
-    private double reactionTime;
+    private int reactionTime;
 
     public static ShareReactionTimeData getInstance() {
         if (reactionTimeData != null) {
@@ -15,7 +15,7 @@ public class ShareReactionTimeData {
     }
 
     // getters and setters
-    public double getReactionTime() {return reactionTime;}
+    public int getReactionTime() {return reactionTime;}
 
-    public void setReactionTime(double reactionTime) {this.reactionTime = reactionTime;}
+    public void setReactionTime(int reactionTime) {this.reactionTime = reactionTime;}
 }

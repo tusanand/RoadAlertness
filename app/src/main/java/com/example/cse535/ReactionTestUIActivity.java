@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class ReactionTestUIActivity extends AppCompatActivity{
 
     // initialize variables
-    private double reactionTime = 0;
+    private int reactionTime = 0;
 
     @Override
     protected void onCreate (Bundle savedInstanceState){
@@ -40,14 +40,14 @@ public class ReactionTestUIActivity extends AppCompatActivity{
         super.onActivityResult(reqCode, resCode, data);
         Log.d("ActivityResult", "onActivityResult called with requestCode: " + reqCode + ", resultCode: " + resCode);
         if (reqCode == 1 && resCode == Activity.RESULT_OK && data != null){
-            double rtime = data.getDoubleExtra("reactionTime", 0.0);
+            int rtime = data.getIntExtra("reactionTime", 0);
             Log.d("ActivityResult", "Received reaction time: " + rtime);
             setReactionTime(rtime);
             Log.d("reactionTime", "" + getReactionTime());
         }
     }
 
-    private void shareReactionTime(double rtime) {
+    private void shareReactionTime(int rtime) {
         ShareReactionTimeData reactionTimeData = ShareReactionTimeData.getInstance();
         reactionTimeData.setReactionTime(rtime);
         Log.d("tag", "" + reactionTimeData.getReactionTime());
@@ -58,6 +58,6 @@ public class ReactionTestUIActivity extends AppCompatActivity{
     }
 
     // getter and setter
-    public void setReactionTime(double reactionTime) {this.reactionTime = reactionTime;}
-    public double getReactionTime() {return reactionTime;}
+    public void setReactionTime(int reactionTime) {this.reactionTime = reactionTime;}
+    public int getReactionTime() {return reactionTime;}
 }
