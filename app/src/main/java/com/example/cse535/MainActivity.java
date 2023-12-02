@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             String cogWorkload = "HCW";
-            double reactionTime = -1;
+            int reactionTime = -1;
 
             try {
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (String.valueOf(binding.crashChanceInputCog.getText()).equals("HCW") == false) {
                     throw new Exception();
                 }
-                reactionTime = Double.parseDouble(String.valueOf(binding.crashChanceInputReaction.getText()));
+                reactionTime = Integer.parseInt(String.valueOf(binding.crashChanceInputReaction.getText()));
                 if (reactionTime <= 0) {
                     throw new Exception();
                 }

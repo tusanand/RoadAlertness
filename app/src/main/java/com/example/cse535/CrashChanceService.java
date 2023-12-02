@@ -18,7 +18,7 @@ public class CrashChanceService {
     public CrashChanceService() {
     }
 
-    public void getCrashChanceAsync(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
+    public void getCrashChanceAsync(String cogWorkload, int reactionTime, CrashChanceListener listener) throws Exception {
         new CrashChanceTask(cogWorkload, reactionTime, listener).execute();
     }
 
@@ -36,11 +36,11 @@ public class CrashChanceService {
             WILL_CRASH
         }
 
-        public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
+        public CrashChanceTask(String cogWorkload, int reactionTime, CrashChanceListener listener) throws Exception {
             this.listener = listener;
 
             if (reactionTime <= 0) throw new Exception();
-            this.REACTION_TIME = reactionTime;
+            this.REACTION_TIME = reactionTime * 1.0 / 1000;
 
             this.DECEL_LIM = -150.0;
             if (cogWorkload.equals("LCW")) this.DECEL_LIM = -200.0;
