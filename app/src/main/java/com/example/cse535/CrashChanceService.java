@@ -18,8 +18,8 @@ public class CrashChanceService {
     public CrashChanceService() {
     }
 
-    public void getCrashChanceAsync(String cogWorkload, int reactionTime, CrashChanceListener listener) throws Exception {
-        new CrashChanceTask(cogWorkload, reactionTime, listener).execute();
+    public void getCrashChanceAsync(String cogWorkload, CrashChanceListener listener) throws Exception {
+        new CrashChanceTask(cogWorkload, listener).execute();
     }
 
     private static class CrashChanceTask extends AsyncTask<Void, Void, String> {
@@ -31,12 +31,19 @@ public class CrashChanceService {
         private final double REACTION_TIME;
         private final CrashChanceListener listener;
 
+        private ShareCrashSpeedData shareCSD;
+        private ShareReactionTimeData shareRTD;
+
         private enum Crash {
             WILL_NOT_CRASH,
             WILL_CRASH
         }
 
-        public CrashChanceTask(String cogWorkload, int reactionTime, CrashChanceListener listener) throws Exception {
+        public CrashChanceTask(String cogWorkload, CrashChanceListener listener) throws Exception {
+            shareCSD = ShareCrashSpeedData.getInstance();
+            shareRTD = ShareReactionTimeData.getInstance();
+            int reactionTime = shareRTD.getReactionTime();
+
             this.listener = listener;
 
             if (reactionTime <= 0) throw new Exception();
@@ -48,13 +55,15 @@ public class CrashChanceService {
 
         @Override
         protected String doInBackground(Void... voids) {
-            double exitVal = 150.0;
-            for (double i = 20.0; i < 150; i += 10) {
+            int exitVal = 150;
+            for (int i = 20; i < 150; i += 10) {
                 if (simulateCrash(0.0, i, -1 * distanceBehindKmph(i)) == Crash.WILL_CRASH) {
                     exitVal = i;
                     break;
                 }
             }
+
+            shareCSD.setCrashSpeed(exitVal);
             return String.valueOf(exitVal);
         }
 

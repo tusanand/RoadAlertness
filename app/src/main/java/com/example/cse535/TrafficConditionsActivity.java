@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TrafficConditionsActivity extends AppCompatActivity implements DistanceMatrixAPIRequest.DistanceMatrixCallback {
 
@@ -17,10 +18,11 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
     EditText originText, desText;
     TextView displayArea;
     ShareRecommendationData rec;
-    //ShareReactionTimeData reactTime;
+    ShareCrashSpeedData shareCSD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        shareCSD = ShareCrashSpeedData.getInstance();
 
         rec = ShareRecommendationData.getInstance();
         super.onCreate(savedInstanceState);
@@ -65,9 +67,15 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
             int distance = result.getDistance();
             int duration = result.getDuration();
             int durationInTraffic = result.getDurationInTraffic();
-            int crashSpeed = 85; // In KPH, this is just a static value for testing. Real value will range from [0-200~]
+            int crashSpeed = shareCSD.getCrashSpeed();
 
-            recommendationAlgo(distance, duration, durationInTraffic, crashSpeed);
+            try {
+                recommendationAlgo(distance, duration, durationInTraffic, crashSpeed);
+            }
+            catch (Exception e) {
+                Toast.makeText(this, "Error generating recommendations. " +
+                        "Make sure reaction time test was run.", Toast.LENGTH_LONG).show();
+            }
 
         } else {
             // Handle the case where the result is null or an error occurred
@@ -76,7 +84,7 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
         }
     }
 
-    public void recommendationAlgo(int distance, int duration, int durationInTraffic, int crashSpeed) {
+    public void recommendationAlgo(int distance, int duration, int durationInTraffic, int crashSpeed) throws Exception {
 
         double speedWithoutTraffic = distance / (double) duration;
         double speedWithTraffic = distance / (double) durationInTraffic;
@@ -88,6 +96,11 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
 
             roadCondition = "LCW";
         }
+        CrashChanceService ccs = new CrashChanceService();
+        ccs.getCrashChanceAsync(roadCondition, new CrashChanceService.CrashChanceListener() {
+            @Override
+            public void onCrashChanceCalculated(String crashChance) {}
+        });
 
         // USE CRASH A KPH INSTEAD OF REACTION TIME
         String recommendation = "No specific recommendation";

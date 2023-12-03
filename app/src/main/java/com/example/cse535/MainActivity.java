@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
             binding.reactionTime.setText("Calculating...");
             binding.reactionBtn.setEnabled(false);
 
-            reactionValue = 93; //setting dummy value
+            Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
+            startActivity(intent);
             binding.reactionTime.setText("Reaction Time: " + reactionValue);
         });
 
