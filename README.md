@@ -6,6 +6,7 @@ The aim of the project is to develop the UI of the app. I have worked on creatin
 
 
 ## Steps to run
+-*VERY IMPORTANT* You must update the local.properties file so your SDK path matches your OS. If you don't do this, the project can't build.
 - The main file is the activity_main.xml.
 - The values for respiratory rate, heart rate, reaction time, sleep hours are harcoded as it is a part of my teammates implementation.
 - Click on individual buttons for 'Measure Respiratory Rate', 'Measure HeartRate', 'Measure ReactionTime', enter sleep hours.
