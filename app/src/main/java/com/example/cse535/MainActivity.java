@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
             startActivity(intent);
+
+            Log.d("main_reaction_time", "" + shareReactionTimeData.getReactionTime());
+
             binding.reactionTime.setText("Reaction Time: " + shareReactionTimeData.getReactionTime());
         });
 

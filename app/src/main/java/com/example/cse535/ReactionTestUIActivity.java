@@ -39,6 +39,7 @@ public class ReactionTestUIActivity extends AppCompatActivity{
     protected void onActivityResult(int reqCode, int resCode, @Nullable Intent data){
         super.onActivityResult(reqCode, resCode, data);
         Log.d("ActivityResult", "onActivityResult called with requestCode: " + reqCode + ", resultCode: " + resCode);
+
         if (reqCode == 1 && resCode == Activity.RESULT_OK && data != null){
             int rtime = data.getIntExtra("reactionTime", 0);
             Log.d("ActivityResult", "Received reaction time: " + rtime);
