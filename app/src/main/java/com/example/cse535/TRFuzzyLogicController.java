@@ -11,8 +11,16 @@ import java.util.Comparator;
 public class TRFuzzyLogicController {
     private static final double e = 2.71828d;
     private static final double pi = 3.14;
+    private static ShareReactionTimeData shareRTD;
+    private static ShareSymptomsData shareSD;
 
-    public static double ComputeFuzzy(double hr, double rr, double tr, double sleep, double symptom) {
+    public static double ComputeFuzzy(double hr, double rr, double sleep) {
+        shareRTD = ShareReactionTimeData.getInstance();
+        double tr = shareRTD.getReactionTime() * 1.0 / 1000;
+
+        shareSD = ShareSymptomsData.getInstance();
+        double symptom = shareSD.getSymptomComputedEffect();
+
 
         int hrMembership = 0;
         int rrMembership = 0;
@@ -24,8 +32,8 @@ public class TRFuzzyLogicController {
         double hrHigh = HRMFH(hr);
         double rrLow = RRMFL(rr);
         double rrHigh = RRMFH(rr);
-        double trLow = RRMFL(tr);
-        double trHigh = RRMFH(tr);
+        double trLow = TRMFL(tr);
+        double trHigh = TRMFH(tr);
         double sleepLow = SLEEPMFL(sleep);
         double sleepHigh = SLEEPMFH(sleep);
         double symptLow = SYMPTMFL(symptom);

@@ -74,9 +74,8 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
             }
             catch (Exception e) {
                 Toast.makeText(this, "Error generating recommendations. " +
-                        "Make sure reaction time test was run.", Toast.LENGTH_LONG).show();
+                        "Make sure all inputs are given.", Toast.LENGTH_LONG).show();
             }
-
         } else {
             // Handle the case where the result is null or an error occurred
             Log.d("Error", "API Result is Null");
@@ -96,6 +95,10 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
 
             roadCondition = "LCW";
         }
+
+        double outputReaction = TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, sleepDouble);
+
+
         CrashChanceService ccs = new CrashChanceService();
         ccs.getCrashChanceAsync(roadCondition, new CrashChanceService.CrashChanceListener() {
             @Override

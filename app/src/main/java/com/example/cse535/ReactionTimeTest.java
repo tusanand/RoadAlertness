@@ -55,7 +55,7 @@ public class ReactionTimeTest extends AppCompatActivity {
             public void onFinish(){
                 Log.d("REACTION", "finish");
                 // Do nothing here; the timer has finished, but we still want the click listener to work
-
+                Log.d("IN_TEST", String.valueOf(reactionTime));
                 // Set the click listener here to ensure it's applied for each round
                 setClickListener(binding);
             }
@@ -90,6 +90,7 @@ public class ReactionTimeTest extends AppCompatActivity {
             public void onClick(View v) {
                 long end = System.currentTimeMillis();
                 long rt = (end - (start - 3000)) / 1000;
+                Log.d("ON_CLICK", String.valueOf(rt));
                 setTime((double) rt);
 
                 resetTest(binding);
