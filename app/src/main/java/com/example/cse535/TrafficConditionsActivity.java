@@ -96,11 +96,10 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
             roadCondition = "LCW";
         }
 
-        double outputReaction = TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, sleepDouble);
-
+        double reactionTime = TRFuzzyLogicController.ComputeFuzzy();
 
         CrashChanceService ccs = new CrashChanceService();
-        ccs.getCrashChanceAsync(roadCondition, new CrashChanceService.CrashChanceListener() {
+        ccs.getCrashChanceAsync(roadCondition, reactionTime, new CrashChanceService.CrashChanceListener() {
             @Override
             public void onCrashChanceCalculated(String crashChance) {}
         });

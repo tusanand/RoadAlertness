@@ -33,7 +33,7 @@ public class FuzzyTestActivity extends AppCompatActivity {
         String symptom = binding.SymptText.getText().toString();
         double symptomDouble = Double.parseDouble(symptom);
 
-        double outputReaction = TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, sleepDouble, symptomDouble);
+        double outputReaction = 0; //TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, sleepDouble, symptomDouble);
 
         String outputText = "TR(ms): " + outputReaction;
         binding.OutputText.setText(outputText);

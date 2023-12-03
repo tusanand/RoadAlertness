@@ -18,8 +18,8 @@ public class CrashChanceService {
     public CrashChanceService() {
     }
 
-    public void getCrashChanceAsync(String cogWorkload, CrashChanceListener listener) throws Exception {
-        new CrashChanceTask(cogWorkload, listener).execute();
+    public void getCrashChanceAsync(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
+        new CrashChanceTask(cogWorkload, reactionTime, listener).execute();
     }
 
     private static class CrashChanceTask extends AsyncTask<Void, Void, String> {
@@ -32,22 +32,19 @@ public class CrashChanceService {
         private final CrashChanceListener listener;
 
         private ShareCrashSpeedData shareCSD;
-        private ShareReactionTimeData shareRTD;
 
         private enum Crash {
             WILL_NOT_CRASH,
             WILL_CRASH
         }
 
-        public CrashChanceTask(String cogWorkload, CrashChanceListener listener) throws Exception {
+        public CrashChanceTask(String cogWorkload, double reactionTime, CrashChanceListener listener) throws Exception {
             shareCSD = ShareCrashSpeedData.getInstance();
-            shareRTD = ShareReactionTimeData.getInstance();
-            int reactionTime = shareRTD.getReactionTime();
 
             this.listener = listener;
 
             if (reactionTime <= 0) throw new Exception();
-            this.REACTION_TIME = reactionTime * 1.0 / 1000;
+            this.REACTION_TIME = reactionTime / 1000;
 
             this.DECEL_LIM = -150.0;
             if (cogWorkload.equals("LCW")) this.DECEL_LIM = -200.0;

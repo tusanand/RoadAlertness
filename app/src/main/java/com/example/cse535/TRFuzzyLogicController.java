@@ -2,7 +2,6 @@ package com.example.cse535;
 
 import android.util.Log;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,14 +12,19 @@ public class TRFuzzyLogicController {
     private static final double pi = 3.14;
     private static ShareReactionTimeData shareRTD;
     private static ShareSymptomsData shareSD;
+    private static ShareHeartRespiratorySleepData shareHRSD;
 
-    public static double ComputeFuzzy(double hr, double rr, double sleep) {
+    public static double ComputeFuzzy() {
+        shareHRSD = ShareHeartRespiratorySleepData.getInstance();
+        double hr = shareHRSD.getHeartRateValue() * 1.0;
+        double rr = shareHRSD.getRespiratoryValue() * 1.0;
+        double sleep = shareHRSD.getSleepValue();
+
         shareRTD = ShareReactionTimeData.getInstance();
         double tr = shareRTD.getReactionTime() * 1.0 / 1000;
 
         shareSD = ShareSymptomsData.getInstance();
         double symptom = shareSD.getSymptomComputedEffect();
-
 
         int hrMembership = 0;
         int rrMembership = 0;
