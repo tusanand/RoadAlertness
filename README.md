@@ -43,9 +43,10 @@ RoadAlertness is a mobile application designed to address the critical issue of 
     - Build and run the application on an Android emulator or a physical device.
 
 5. **Explore Features:** 
-    - Click the `+` icon in the bottom right corner and then the `Add Symptoms` button.
+    - Click the `Add Symptoms` button.
     - Input your health symptoms and rate them.
     - Click the `Save Symptoms` button.
+    - Input other parameters like hear rate, respiratory rate, sleep hours, compute reaction time.
     - On the `Dashboard` page, click the `Save Record` button to save the data into the database.
     - To view your historical records, click on the panel at the top.
     - A list appears on the screen, click on the list item to view the symptoms data.
