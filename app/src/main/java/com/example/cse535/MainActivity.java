@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     MyDatabaseHelper myDatabaseHelper;
-    private boolean clicked = false;
     private int heartRateValue = 0;
     private int respiratoryRateValue = 0;
 
@@ -80,31 +79,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.measureHeartRate.setOnClickListener(v -> {
-            binding.heartRateValue.setText("Calculating...");
-            binding.measureHeartRate.setEnabled(false);
-//            Intent intent = new Intent(MainActivity.this, HeartRateService.class);
-//            startService(intent);
-            heartRateValue = 72;
-            binding.heartRateValue.setText("Heart rate: " + heartRateValue); //Setting dummy value
+            openFileDialog();
         });
 
         binding.measureRespiratoryRate.setOnClickListener(v -> {
             binding.respiratoryRateValue.setText("Calculating...");
             binding.measureRespiratoryRate.setEnabled(false);
 
-//            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
-//            startService(intent);
-
-            respiratoryRateValue = 93; //setting dummy value
-            binding.respiratoryRateValue.setText("Respiratory rate: " + respiratoryRateValue);
+            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
+            startService(intent);
         });
 
         binding.reactionBtn.setOnClickListener(v -> {
             binding.reactionTime.setText("Calculating...");
             binding.reactionBtn.setEnabled(false);
-
-//            Intent intent = new Intent(MainActivity.this, RespiratoryRateService.class);
-//            startService(intent);
 
             reactionValue = 93; //setting dummy value
             binding.reactionTime.setText("Reaction Time: " + reactionValue);
@@ -139,5 +127,40 @@ public class MainActivity extends AppCompatActivity {
             );
         });
     }
+
+    public void openFileDialog() {
+        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        data.setType("video/*");
+        data = Intent.createChooser(data, "Select file");
+        mGetContent.launch(data);
+    }
+
+    ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult activityResult) {
+                if(activityResult.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = activityResult.getData();
+                    Uri uri = data.getData();
+
+                    HeartRateService heartRateService = new HeartRateService();
+                    binding.heartRateValue.setText("Calculating...");
+                    binding.heartRateValue.setEnabled(false);
+                    Toast.makeText(MainActivity.this, "Service started.", Toast.LENGTH_SHORT).show();
+                    heartRateService.getHeartRateAsync(MainActivity.this, uri, new HeartRateService.HeartRateListener() {
+                        @Override
+                        public void onHeartRateCalculated(String heartRate) {
+                            if (heartRate != null) {
+                                heartRateValue = Integer.parseInt(heartRate);
+                                binding.heartRateValue.setText("Heart rate: " + heartRateValue);
+                                binding.heartRateValue.setEnabled(true);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Heart rate calculation failed.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
 }
