@@ -1,22 +1,49 @@
+# RoadAlertness
 
-# Project 4
+## Overview
 
+RoadAlertness is a mobile application designed to address the critical issue of sleep-deprived driving, a significant contributor to motor-vehicle accidents. The application employs a context-aware approach, utilizing biometric data, sleep schedules, prescription priorities, and user-reported health symptoms to assess a user's fitness for driving. The goal is to provide personalized recommendations, guiding users to choose between driving and public transportation based on their current state.
 
-The aim of the project is to develop the UI of the app. I have worked on creating two activities in the app. One for entering the vitals information and storing it in the database and another showing the list of all recorded vitals. This document depicts the steps required to run the project.
+## Features
 
+- **User Input for Health Symptoms:**
+    - Users can input and rate 10 different health symptoms on a scale of 1 to 5.
+    - The application calculates a weighted sum based on the user's ratings.
 
-## Steps to run
-- The main file is the activity_main.xml.
-- The values for respiratory rate, heart rate, reaction time, sleep hours are harcoded as it is a part of my teammates implementation.
-- Click on individual buttons for 'Measure Respiratory Rate', 'Measure HeartRate', 'Measure ReactionTime', enter sleep hours.
-- Click on the 'Save Record' button to save the entered data
-- The 'Recomendation' button shows the recommendation based on the input data. This is non functional in Project 4.
-- The 'View Progress' button displays the list of all the saved vitals in card format.
+- **Fuzzy Logic Assessment:**
+    - The computed value from user input is fed into a fuzzy logic controller.
+    - Fuzzy logic, combined with other inputs, determines the user's fitness for driving.
 
+- **Data Storage and Retrieval:**
+    - User symptom input records are stored securely in a SQLite database.
+    - Users can view their historical records in the "View Records" section.
 
-## Files
-- MainActivity.java
-- activity_main.xml
-- ListRecordsActivity.java
-- activity_list_records.xml
-- list_recycler_view_data.xml
+- **Transportation Recommendations:**
+    - Based on the fuzzy logic assessment and other contextual factors, the application provides personalized recommendations for the best transportation method.
+
+## Tech Stack
+
+    - **Android Studio:** Primary IDE for Android application development.
+    - **Java:** Core programming languages for backend logic.
+    - **SQLite Database:** Used for secure storage and retrieval of user records.
+
+## Getting Started
+
+1. **Clone the Repository:**
+    ```bash
+    git clone https://github.com/tusanand/RoadAlertness.git
+    ```
+
+2. **Open in Android Studio:**
+    - Launch Android Studio and open the project.
+
+3. **Build and Run:**
+    - Build and run the application on an Android emulator or a physical device.
+
+4. **Explore Features:** 
+    - Click the `+` icon in the bottom right corner and then the `Add Symptoms` button.
+    - Input your health symptoms and rate them.
+    - Click the `Save Symptoms` button.
+    - On the `Dashboard` page, click the `Save Record` button to save the data into the database.
+    - To view your historical records, click on the panel at the top.
+    - A list appears on the screen, click on the list item to view the symptoms data.
