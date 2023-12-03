@@ -29,10 +29,6 @@ public class ReactionTestUIActivity extends AppCompatActivity{
             Intent intent = new Intent(ReactionTestUIActivity.this, ReactionTimeTest.class);
             startActivityForResult(intent, 1);
         });
-
-        binding.saveTimeBtn.setOnClickListener(v -> {
-            shareReactionTime(getReactionTime());
-        });
     }
 
     @Override
@@ -43,6 +39,7 @@ public class ReactionTestUIActivity extends AppCompatActivity{
         if (reqCode == 1 && resCode == Activity.RESULT_OK && data != null){
             int rtime = data.getIntExtra("reactionTime", 0);
             Log.d("ActivityResult", "Received reaction time: " + rtime);
+            shareReactionTime(rtime);
             setReactionTime(rtime);
             Log.d("reactionTime", "" + getReactionTime());
         }
@@ -52,7 +49,6 @@ public class ReactionTestUIActivity extends AppCompatActivity{
         ShareReactionTimeData reactionTimeData = ShareReactionTimeData.getInstance();
         Log.d("IN_SHARE", String.valueOf(rtime));
         reactionTimeData.setReactionTime(rtime);
-        reactionTimeData.setReactionTime(250);
         Log.d("tag", "" + reactionTimeData.getReactionTime());
         finish();
 

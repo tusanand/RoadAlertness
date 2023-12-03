@@ -32,17 +32,6 @@ public class TRFuzzyLogicController {
         int sleepMembership = 0;
         int symptomMembership = 0;
 
-        double hrLow = HRMFL(hr);
-        double hrHigh = HRMFH(hr);
-        double rrLow = RRMFL(rr);
-        double rrHigh = RRMFH(rr);
-        double trLow = TRMFL(tr);
-        double trHigh = TRMFH(tr);
-        double sleepLow = SLEEPMFL(sleep);
-        double sleepHigh = SLEEPMFH(sleep);
-        double symptLow = SYMPTMFL(symptom);
-        double symptHigh = SYMPTMFH(symptom);
-
         if (HRMFL(hr) < HRMFH(hr)) {hrMembership = 1;}
         if (RRMFL(rr) < RRMFH(rr)) { rrMembership = 1;}
         if (TRMFL(tr) < TRMFH(tr)) {trMembership = 1;}

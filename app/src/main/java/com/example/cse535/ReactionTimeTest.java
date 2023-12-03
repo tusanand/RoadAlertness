@@ -17,6 +17,7 @@ public class ReactionTimeTest extends AppCompatActivity {
     private int reactionTime = 0;
 
     private Handler handler;
+    int rFactor = 5;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class ReactionTimeTest extends AppCompatActivity {
         }*/
 
         Random random = new Random();
-        int rFactor = random.nextInt(10) + 1;
+        rFactor = random.nextInt(10) + 1;
 
         new CountDownTimer(rFactor * 1000, 1000){
             public void onTick(long remaining){
