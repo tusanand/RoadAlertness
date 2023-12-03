@@ -16,10 +16,13 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
     String originOG, destinationOG, roadCondition;
     EditText originText, desText;
     TextView displayArea;
+    ShareRecommendationData rec;
+    //ShareReactionTimeData reactTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        rec = ShareRecommendationData.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traffic_conditions);
 
@@ -269,6 +272,7 @@ public class TrafficConditionsActivity extends AppCompatActivity implements Dist
 
         // Print the recommendation
         Log.d("Recommendation", recommendation);
+        rec.setRecommendation(recommendation);
         displayArea.setText(recommendation);
     }
 }
