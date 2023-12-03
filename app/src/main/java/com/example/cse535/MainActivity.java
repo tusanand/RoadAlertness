@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private int respiratoryRateValue = 0;
 
     private int reactionValue = 10;
-    ShareRecommendationData rec;
+    private ShareRecommendationData rec;
+    private ShareReactionTimeData shareReactionTimeData;
 
     private BroadcastReceiver respiratoryRateReceiver = new BroadcastReceiver() {
         @Override
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        shareReactionTimeData = ShareReactionTimeData.getInstance();
         rec = ShareRecommendationData.getInstance();
         recommendation = rec.getRecommendation();
         if (recommendation == null) {
@@ -103,8 +105,9 @@ public class MainActivity extends AppCompatActivity {
             binding.reactionTime.setText("Calculating...");
             binding.reactionBtn.setEnabled(false);
 
-            reactionValue = 93; //setting dummy value
-            binding.reactionTime.setText("Reaction Time: " + reactionValue);
+            Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
+            startActivity(intent);
+            binding.reactionTime.setText("Reaction Time: " + shareReactionTimeData.getReactionTime());
         });
 
         binding.responseBtn.setOnClickListener(v -> {
@@ -115,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
-            ShareReactionTimeData shareReactionTimeData = ShareReactionTimeData.getInstance();
             myDatabaseHelper.saveRecord(
                     heartRateValue,
                     respiratoryRateValue,
