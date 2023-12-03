@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -50,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver(respiratoryRateReceiver, new IntentFilter("respiratory_rate_calculated"));
+
+        if(shareReactionTimeData.getReactionTime() != 0) {
+            binding.reactionTime.setText("Reaction Time: " + shareReactionTimeData.getReactionTime());
+        }
+        else {
+            binding.reactionTime.setText("No reaction time generated");
+        }
     }
 
     @Override
@@ -61,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         shareReactionTimeData = ShareReactionTimeData.getInstance();
         shareHeartRespiratorySleepData = ShareHeartRespiratorySleepData.getInstance();
         rec = ShareRecommendationData.getInstance();
         recommendation = rec.getRecommendation();
+
         if (recommendation == null) {
 
             recommendation = "A recommendation has not been generated";
@@ -75,7 +83,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        if(shareReactionTimeData.getReactionTime() != 0) {
+            binding.reactionTime.setText("Reaction Time: " + shareReactionTimeData.getReactionTime() + "ms");
+        }
+        else {
+            binding.reactionTime.setText("No reaction time generated");
+        }
         binding.symptomBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SymptomsActivity.class);
             startActivity(intent);
@@ -102,15 +115,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.reactionBtn.setOnClickListener(v -> {
-            binding.reactionTime.setText("Calculating...");
             binding.reactionBtn.setEnabled(false);
 
             Intent intent = new Intent(MainActivity.this, ReactionTestUIActivity.class);
             startActivity(intent);
 
             Log.d("main_reaction_time", "" + shareReactionTimeData.getReactionTime());
-
-            binding.reactionTime.setText("Reaction Time: " + shareReactionTimeData.getReactionTime());
         });
 
         binding.responseBtn.setOnClickListener(v -> {
