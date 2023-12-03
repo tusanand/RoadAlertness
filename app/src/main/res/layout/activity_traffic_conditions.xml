@@ -20,6 +20,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="348dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="80dp"
+        android:text="Based on your reaction time and the current road conditions of your trip, we will provide a transportation recommendation."
+        android:textAlignment="center"
+        app:flow_horizontalAlign="start"
+        app:flow_verticalAlign="baseline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="119dp"
         android:layout_height="31dp"
@@ -62,7 +77,7 @@
         android:layout_width="281dp"
         android:layout_height="53dp"
         android:layout_marginBottom="308dp"
-        android:text="Fetch Traffic Data"
+        android:text="Generate Recommendation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
