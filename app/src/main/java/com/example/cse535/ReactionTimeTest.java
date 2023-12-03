@@ -14,7 +14,7 @@ import com.example.cse535.databinding.ActivityReactionTimeBinding;
 import java.util.Random;
 
 public class ReactionTimeTest extends AppCompatActivity {
-    private double reactionTime = 0;
+    private int reactionTime = 0;
 
     private Handler handler;
 
@@ -45,11 +45,12 @@ public class ReactionTimeTest extends AppCompatActivity {
             return;
         }*/
 
-        new CountDownTimer(3000, 1000){
+        Random random = new Random();
+        int rFactor = random.nextInt(10) + 1;
+
+        new CountDownTimer(rFactor * 1000, 1000){
             public void onTick(long remaining){
                 Log.d("tick", "" + remaining);
-                long secondsRemaining = remaining / 1000;
-                binding.timerDisplay.setText("Seconds Remaining: " + secondsRemaining);
             }
 
             public void onFinish(){
@@ -89,9 +90,8 @@ public class ReactionTimeTest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 long end = System.currentTimeMillis();
-                long rt = (end - (start - 3000)) / 1000;
-                Log.d("ON_CLICK", String.valueOf(rt));
-                setTime((double) rt);
+                long rt = end - start;
+                setTime((int) rt);
 
                 resetTest(binding);
 
@@ -102,17 +102,18 @@ public class ReactionTimeTest extends AppCompatActivity {
                 // Log intent information
                 Log.d("Intent", "Reaction time: " + getTime());
                 Log.d("Intent", "Intent data: " + resIntent.toString());
+
+                finish();
             }
         });
     }
 
     private void resetTest(ActivityReactionTimeBinding binding){
         binding.purpleCircle.setVisibility(View.INVISIBLE);
-        binding.timerDisplay.setText("Seconds Remaining: ");
     }
 
     // getters and setters
-    public double getTime() {return reactionTime;}
+    public int getTime() {return reactionTime;}
 
-    public void setTime(double reactionTime) {this.reactionTime = reactionTime;}
+    public void setTime(int reactionTime) {this.reactionTime = reactionTime;}
 }
