@@ -28,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private String recommendation = "";
 
-    MyDatabaseHelper myDatabaseHelper;
+    private MyDatabaseHelper myDatabaseHelper;
     private int heartRateValue = 0;
     private int respiratoryRateValue = 0;
 
     private int reactionValue = 10;
     private ShareRecommendationData rec;
     private ShareReactionTimeData shareReactionTimeData;
+    private ShareHeartRespiratoryData shareHeartRespiratoryData;
 
     private BroadcastReceiver respiratoryRateReceiver = new BroadcastReceiver() {
         @Override
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             if ("respiratory_rate_calculated".equals(intent.getAction())) {
                 respiratoryRateValue = intent.getIntExtra("respiratory_rate", 0);
                 binding.respiratoryRateValue.setText("Respiratory rate: " + respiratoryRateValue);
+                shareHeartRespiratoryData.setRespiratoryValue(respiratoryRateValue);
                 binding.measureRespiratoryRate.setEnabled(true);
             }
         }
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         shareReactionTimeData = ShareReactionTimeData.getInstance();
+        shareHeartRespiratoryData = ShareHeartRespiratoryData.getInstance();
         rec = ShareRecommendationData.getInstance();
         recommendation = rec.getRecommendation();
         if (recommendation == null) {
@@ -163,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onHeartRateCalculated(String heartRate) {
                             if (heartRate != null) {
                                 heartRateValue = Integer.parseInt(heartRate);
+                                shareHeartRespiratoryData.setHeartRateValue(heartRateValue);
                                 binding.heartRateValue.setText("Heart rate: " + heartRateValue);
                                 binding.heartRateValue.setEnabled(true);
                             } else {
