@@ -7,14 +7,14 @@
 
     <TextView
         android:id="@+id/testPrompt"
-        android:layout_width="370dp"
-        android:layout_height="120dp"
+        android:layout_width="380dp"
+        android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
-        android:text="For this test, wait for 3 seconds and click on the purple dot on the screen."
+        android:text="For this test, wait until the countdown timer reaches 0 seconds and click on the purple dot on the screen."
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
