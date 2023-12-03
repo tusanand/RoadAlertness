@@ -88,45 +88,6 @@ public class MainActivity extends AppCompatActivity {
             binding.heartRateValue.setText("Heart rate: " + heartRateValue); //Setting dummy value
         });
 
-        binding.crashChance.setOnClickListener(v -> {
-            binding.crashChance.setEnabled(false);
-
-
-            String cogWorkload = "HCW";
-            int reactionTime = -1;
-
-            try {
-
-                if (String.valueOf(binding.crashChanceInputCog.getText()).equals("LCW")) {
-                    cogWorkload = "LCW";
-                } else if (String.valueOf(binding.crashChanceInputCog.getText()).equals("HCW") == false) {
-                    throw new Exception();
-                }
-                reactionTime = Integer.parseInt(String.valueOf(binding.crashChanceInputReaction.getText()));
-                if (reactionTime <= 0) {
-                    throw new Exception();
-                }
-
-                binding.crashChanceLabel.setText("Calculating...");
-                CrashChanceService ccs = new CrashChanceService();
-                ccs.getCrashChanceAsync(cogWorkload, reactionTime, new CrashChanceService.CrashChanceListener() {
-                    @Override
-                    public void onCrashChanceCalculated(String crashChance) {
-                        if (crashChance != null) {
-                            binding.crashChanceLabel.setText("Speed of crash: " + crashChance + " km/h");
-                            binding.crashChance.setEnabled(true);
-                        } else {
-                            Toast.makeText(MainActivity.this, "Calculating crash chance failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-            catch (Exception e) {
-                binding.crashChance.setEnabled(true);
-                Toast.makeText(MainActivity.this, "Invalid inputs. Try again", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         binding.measureRespiratoryRate.setOnClickListener(v -> {
             binding.respiratoryRateValue.setText("Calculating...");
             binding.measureRespiratoryRate.setEnabled(false);
@@ -152,11 +113,6 @@ public class MainActivity extends AppCompatActivity {
         binding.responseBtn.setOnClickListener(v -> {
 //            Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
 //            startActivity(intent);
-        });
-
-        binding.FuzzyButton.setOnClickListener( v -> {
-            Intent intent = new Intent(MainActivity.this, FuzzyTestActivity.class);
-            startActivity(intent);
         });
 
         binding.save.setOnClickListener(v -> {
