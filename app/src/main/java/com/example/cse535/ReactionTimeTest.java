@@ -23,8 +23,6 @@ public class ReactionTimeTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityReactionTimeBinding binding;
 
-        Log.d("ReactionTimeTest", "onCreate called");
-
         binding = ActivityReactionTimeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -37,9 +35,6 @@ public class ReactionTimeTest extends AppCompatActivity {
         // get dimensions of screen area below display
         int screenW = binding.testView.getWidth();
         int screenH = binding.testView.getHeight();
-
-        Log.d("REACTION", ""  + screenW);
-        Log.d("REACTION", "" + screenH);
 
         /*if (screenW <= 0 || screenH <= 0) {
             // Handle the case where screen dimensions are not positive
@@ -55,10 +50,6 @@ public class ReactionTimeTest extends AppCompatActivity {
             }
 
             public void onFinish(){
-                Log.d("REACTION", "finish");
-                // Do nothing here; the timer has finished, but we still want the click listener to work
-                Log.d("IN_TEST", String.valueOf(reactionTime));
-                // Set the click listener here to ensure it's applied for each round
                 setClickListener(binding);
             }
         }.start();
@@ -68,7 +59,6 @@ public class ReactionTimeTest extends AppCompatActivity {
     }
 
     private void setClickListener(ActivityReactionTimeBinding binding) {
-        long start = System.currentTimeMillis();
         binding.purpleCircle.setVisibility(View.VISIBLE);
 
         // calculate random coordinates for purple dot
@@ -83,15 +73,14 @@ public class ReactionTimeTest extends AppCompatActivity {
         binding.purpleCircle.setX((float) dotX);
         binding.purpleCircle.setY((float) dotY);
 
-        Log.d("REACTION", "" + dotX);
-        Log.d("REACTION", "" + dotY);
+        long start = System.currentTimeMillis();
 
         // Set the click listener
         binding.purpleCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 long end = System.currentTimeMillis();
-                long rt = end - start;
+                long rt = end - start - 200;
                 setTime((int) rt);
 
                 resetTest(binding);
@@ -99,10 +88,6 @@ public class ReactionTimeTest extends AppCompatActivity {
                 Intent resIntent = new Intent();
                 resIntent.putExtra("reactionTime", getTime());
                 setResult(Activity.RESULT_OK, resIntent);
-
-                // Log intent information
-                Log.d("Intent", "Reaction time: " + getTime());
-                Log.d("Intent", "Intent data: " + resIntent.toString());
 
                 finish();
             }
