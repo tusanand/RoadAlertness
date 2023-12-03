@@ -26,6 +26,7 @@ import com.example.cse535.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private String recommendation = "";
 
     MyDatabaseHelper myDatabaseHelper;
     private boolean clicked = false;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private int respiratoryRateValue = 0;
 
     private int reactionValue = 10;
-    private String response = "You have a fast reaction time. We recommend using your personal car for this very long trip.";
+    ShareRecommendationData rec;
 
     private BroadcastReceiver respiratoryRateReceiver = new BroadcastReceiver() {
         @Override
@@ -61,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        rec = ShareRecommendationData.getInstance();
+        recommendation = rec.getRecommendation();
+        if (recommendation == null) {
+
+            recommendation = "A recommendation has not been generated";
+        }
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -111,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.responseBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, TrafficConditionsActivity.class);
+            startActivity(intent);
         });
 
         binding.save.setOnClickListener(v -> {
@@ -134,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
                     Integer.parseInt(String.valueOf(binding.sleepRate.getText())),
-                    response,
+                    recommendation,
                     shareReactionTimeData.getReactionTime()
             );
         });
