@@ -5,13 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private int reactionValue = 10;
     private ShareRecommendationData rec;
     private ShareReactionTimeData shareReactionTimeData;
-    private ShareHeartRespiratoryData shareHeartRespiratoryData;
+    private ShareHeartRespiratorySleepData shareHeartRespiratorySleepData;
 
     private BroadcastReceiver respiratoryRateReceiver = new BroadcastReceiver() {
         @Override
@@ -43,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             if ("respiratory_rate_calculated".equals(intent.getAction())) {
                 respiratoryRateValue = intent.getIntExtra("respiratory_rate", 0);
                 binding.respiratoryRateValue.setText("Respiratory rate: " + respiratoryRateValue);
-                shareHeartRespiratoryData.setRespiratoryValue(respiratoryRateValue);
+                shareHeartRespiratorySleepData.setRespiratoryValue(respiratoryRateValue);
                 binding.measureRespiratoryRate.setEnabled(true);
             }
         }
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         shareReactionTimeData = ShareReactionTimeData.getInstance();
-        shareHeartRespiratoryData = ShareHeartRespiratoryData.getInstance();
+        shareHeartRespiratorySleepData = ShareHeartRespiratorySleepData.getInstance();
         rec = ShareRecommendationData.getInstance();
         recommendation = rec.getRecommendation();
         if (recommendation == null) {
@@ -118,6 +115,30 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.sleepRate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // This method is called to notify you that characters within start to start + before are about to be replaced with new text with a length of count.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // This method is called to notify you that somewhere within start to start + before characters have been replaced with new text with a length of count.
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method is called to notify you that the characters within Editable have changed.
+                String newText = editable.toString();
+                // Do something with the changed text
+                try {
+                    shareHeartRespiratorySleepData.setSleepValue(Double.parseDouble(newText));
+                } catch (Exception e) {
+                    shareHeartRespiratorySleepData.setSleepValue(0.0);
+                }
+            }
+        });
+
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
@@ -166,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onHeartRateCalculated(String heartRate) {
                             if (heartRate != null) {
                                 heartRateValue = Integer.parseInt(heartRate);
-                                shareHeartRespiratoryData.setHeartRateValue(heartRateValue);
+                                shareHeartRespiratorySleepData.setHeartRateValue(heartRateValue);
                                 binding.heartRateValue.setText("Heart rate: " + heartRateValue);
                                 binding.heartRateValue.setEnabled(true);
                             } else {

@@ -27,16 +27,13 @@ public class FuzzyTestActivity extends AppCompatActivity {
         String rr = binding.RRText.getText().toString();
         double rrDouble = Double.parseDouble(rr);
 
-        String tr = binding.TRText.getText().toString();
-        double trDouble = Double.parseDouble(tr);
-
         String sleep = binding.SleepText.getText().toString();
         double sleepDouble = Double.parseDouble(sleep);
 
         String symptom = binding.SymptText.getText().toString();
         double symptomDouble = Double.parseDouble(symptom);
 
-        double outputReaction = TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, trDouble, sleepDouble, symptomDouble);
+        double outputReaction = 0; //TRFuzzyLogicController.ComputeFuzzy(hrDouble, rrDouble, sleepDouble, symptomDouble);
 
         String outputText = "TR(ms): " + outputReaction;
         binding.OutputText.setText(outputText);

@@ -49,12 +49,12 @@ public class ReactionTestUIActivity extends AppCompatActivity{
 
     private void shareReactionTime(int rtime) {
         ShareReactionTimeData reactionTimeData = ShareReactionTimeData.getInstance();
+        Log.d("IN_SHARE", String.valueOf(rtime));
         reactionTimeData.setReactionTime(rtime);
+        reactionTimeData.setReactionTime(250);
         Log.d("tag", "" + reactionTimeData.getReactionTime());
+        finish();
 
-        if (!isFinishing()){
-            finish();
-        }
     }
 
     // getter and setter

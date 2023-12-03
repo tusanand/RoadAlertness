@@ -3,7 +3,7 @@ package com.example.cse535;
 public class ShareReactionTimeData {
     private static ShareReactionTimeData reactionTimeData;
 
-    private int reactionTime;
+    private int reactionTime = 0;
 
     public static ShareReactionTimeData getInstance() {
         if (reactionTimeData != null) {
