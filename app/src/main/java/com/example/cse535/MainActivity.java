@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -114,11 +115,6 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(intent);
         });
 
-        binding.FuzzyButton.setOnClickListener( v -> {
-            Intent intent = new Intent(MainActivity.this, FuzzyTestActivity.class);
-            startActivity(intent);
-        });
-
         binding.save.setOnClickListener(v -> {
             myDatabaseHelper = new MyDatabaseHelper(MainActivity.this);
             ShareSymptomsData shareSymptomsData = ShareSymptomsData.getInstance();
@@ -143,8 +139,5 @@ public class MainActivity extends AppCompatActivity {
             );
         });
     }
-
-
-
 
 }
