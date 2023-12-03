@@ -48,4 +48,5 @@
     <string name="title_activity_symptom">Add Symptoms</string>
     <string name="title_activity_list_records">List Records</string>
     <string name="title_activity_view_symptoms">View Recorded Symptoms</string>
+    <string name="title_activity_fuzzy_test">FuzzyTest</string>
 </resources>
