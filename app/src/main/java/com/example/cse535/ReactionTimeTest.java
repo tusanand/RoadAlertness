@@ -51,8 +51,6 @@ public class ReactionTimeTest extends AppCompatActivity {
         new CountDownTimer(rFactor * 1000, 1000){
             public void onTick(long remaining){
                 Log.d("tick", "" + remaining);
-                long secondsRemaining = remaining / 1000;
-                binding.timerDisplay.setText("Seconds Remaining: " + secondsRemaining);
             }
 
             public void onFinish(){
@@ -112,7 +110,6 @@ public class ReactionTimeTest extends AppCompatActivity {
 
     private void resetTest(ActivityReactionTimeBinding binding){
         binding.purpleCircle.setVisibility(View.INVISIBLE);
-        binding.timerDisplay.setText("Seconds Remaining: ");
     }
 
     // getters and setters
