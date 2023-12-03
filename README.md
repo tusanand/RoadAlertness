@@ -37,10 +37,12 @@ RoadAlertness is a mobile application designed to address the critical issue of 
 2. **Open in Android Studio:**
     - Launch Android Studio and open the project.
 
-3. **Build and Run:**
+3. **Update local.properties to point to the Android studio sdk**
+
+4. **Build and Run:**
     - Build and run the application on an Android emulator or a physical device.
 
-4. **Explore Features:** 
+5. **Explore Features:** 
     - Click the `+` icon in the bottom right corner and then the `Add Symptoms` button.
     - Input your health symptoms and rate them.
     - Click the `Save Symptoms` button.

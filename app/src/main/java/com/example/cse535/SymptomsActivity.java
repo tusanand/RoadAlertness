@@ -12,9 +12,6 @@ import java.util.Map;
 
 public class SymptomsActivity extends AppCompatActivity {
 
-    private int heartRateValue = 0;
-    private int respiratoryRateValue = 0;
-
     private Map<String, Double> symptomWeightage = new HashMap<>();
 
     @Override
