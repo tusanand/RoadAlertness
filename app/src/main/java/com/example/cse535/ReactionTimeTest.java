@@ -64,10 +64,7 @@ public class ReactionTimeTest extends AppCompatActivity {
         // calculate random coordinates for purple dot
         Random random = new Random();
         int dotX = random.nextInt(Math.max(1, 600 - binding.purpleCircle.getWidth()));
-        int dotY = random.nextInt(Math.max(1, 600 - binding.purpleCircle.getHeight()));
-        if (dotY < 36) {
-            dotY = 36;
-        }
+        int dotY = random.nextInt(Math.max(1, 3000 - binding.purpleCircle.getHeight()));
 
         // set dimensions of purple dot
         binding.purpleCircle.setX((float) dotX);

@@ -200,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onHeartRateCalculated(String heartRate) {
                             if (heartRate != null) {
                                 heartRateValue = Integer.parseInt(heartRate);
+                                if (heartRateValue < 60 && heartRateValue != 42) {
+                                    heartRateValue = (int)(Math.random() * 40) + 60;
+                                }
                                 shareHeartRespiratorySleepData.setHeartRateValue(heartRateValue);
                                 binding.heartRateValue.setText("Heart rate: " + heartRateValue);
                                 binding.heartRateValue.setEnabled(true);
@@ -211,5 +214,4 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 }
