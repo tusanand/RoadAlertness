@@ -26,13 +26,6 @@ public class TRFuzzyLogicController {
         shareSD = ShareSymptomsData.getInstance();
         double symptom = shareSD.getSymptomComputedEffect();
 
-        hr = 80;
-        rr = 14;
-        sleep = 8;
-        tr = 0.4;
-        symptom = 9;
-        shareRTD.setReactionTime((int) (tr * 1000));
-
         int hrMembership = 0;
         int rrMembership = 0;
         int trMembership = 0;
