@@ -83,7 +83,7 @@ public class HeartRateService {
                     x = b.get(i);
                 }
                 int rate = (int) ((count * 1.0f / 45) * 60);
-                return String.valueOf(rate / 2);
+                return String.valueOf(rate);
             }
         }
 
