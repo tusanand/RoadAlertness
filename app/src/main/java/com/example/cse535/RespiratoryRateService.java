@@ -100,7 +100,7 @@ public class RespiratoryRateService extends Service implements SensorEventListen
         }
 
         double ret = (double) k / 45.00;
-        return (ret * 30 > 20) ? 20 : (int)(ret * 30);
+        return (ret * 30 > 20) ? 20 : (ret * 30 < 10) ? 10 : (int)(ret * 30);
     }
 
     @Override
