@@ -26,6 +26,13 @@ public class TRFuzzyLogicController {
         shareSD = ShareSymptomsData.getInstance();
         double symptom = shareSD.getSymptomComputedEffect();
 
+        hr = 80;
+        rr = 14;
+        sleep = 8;
+        tr = 0.4;
+        symptom = 9;
+        shareRTD.setReactionTime((int) (tr * 1000));
+
         int hrMembership = 0;
         int rrMembership = 0;
         int trMembership = 0;
@@ -111,7 +118,7 @@ public class TRFuzzyLogicController {
             function[index] = Collections.max(Arrays.asList(potentialValues));
         }
 
-        return computeCentroid(function);
+        return computeCentroid(function, trMembership);
     }
 
 
@@ -178,18 +185,17 @@ public class TRFuzzyLogicController {
 
     }
 
-    private static int computeCentroid(double[] function)
+    private static int computeCentroid(double[] function, int trMembership)
     {
-
-
+        int reactionTime = ShareReactionTimeData.getInstance().getReactionTime();
         int left = FindLeft(function);
 
         int right = FindRight(function);
 
         double area = Area(function, left, right);
 
-
-        return XBar(function, left, right, area);
+        int outArea = XBar(function, left, right, area);
+        return (trMembership == 0) ? outArea : reactionTime;
     }
 
     private static int FindLeft (double[] function) {
