@@ -42,7 +42,7 @@ public class ReactionTimeTest extends AppCompatActivity {
         }*/
 
         Random random = new Random();
-        rFactor = random.nextInt(10) + 1;
+        rFactor = random.nextInt(5) + 1;
 
         new CountDownTimer(rFactor * 1000, 1000){
             public void onTick(long remaining){
@@ -64,7 +64,7 @@ public class ReactionTimeTest extends AppCompatActivity {
         // calculate random coordinates for purple dot
         Random random = new Random();
         int dotX = random.nextInt(Math.max(1, 600 - binding.purpleCircle.getWidth()));
-        int dotY = random.nextInt(Math.max(1, 3000 - binding.purpleCircle.getHeight()));
+        int dotY = random.nextInt(Math.max(1, 2000 - binding.purpleCircle.getHeight()));
 
         // set dimensions of purple dot
         binding.purpleCircle.setX((float) dotX);
@@ -77,7 +77,7 @@ public class ReactionTimeTest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 long end = System.currentTimeMillis();
-                long rt = end - start - 200;
+                long rt = end - start - 300;
                 setTime((int) rt);
 
                 resetTest(binding);
