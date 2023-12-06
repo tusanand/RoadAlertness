@@ -24,7 +24,6 @@ import com.example.cse535.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private String recommendation = "";
 
     private MyDatabaseHelper myDatabaseHelper;
     private int heartRateValue = 0;
@@ -72,12 +71,6 @@ public class MainActivity extends AppCompatActivity {
         shareReactionTimeData = ShareReactionTimeData.getInstance();
         shareHeartRespiratorySleepData = ShareHeartRespiratorySleepData.getInstance();
         rec = ShareRecommendationData.getInstance();
-        recommendation = rec.getRecommendation();
-
-        if (recommendation == null) {
-
-            recommendation = "A recommendation has not been generated";
-        }
 
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -170,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     shareSymptomsData.getTired(),
                     shareSymptomsData.getSymptomComputedEffect(),
                     Integer.parseInt(String.valueOf(binding.sleepRate.getText())),
-                    recommendation,
+                    (rec.getRecommendation() != null) ? rec.getRecommendation() : "A recommendation has not been generated",
                     shareReactionTimeData.getReactionTime()
             );
         });
