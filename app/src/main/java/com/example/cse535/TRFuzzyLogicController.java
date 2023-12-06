@@ -111,7 +111,7 @@ public class TRFuzzyLogicController {
             function[index] = Collections.max(Arrays.asList(potentialValues));
         }
 
-        return computeCentroid(function, trMembership);
+        return computeCentroid(function, tr);
     }
 
 
@@ -174,11 +174,9 @@ public class TRFuzzyLogicController {
         Collections.sort(func2, new Sorter() );
 
         return func2.get((int)function.length/2).value;
-
-
     }
 
-    private static int computeCentroid(double[] function, int trMembership)
+    private static int computeCentroid(double[] function, double tr)
     {
         int reactionTime = ShareReactionTimeData.getInstance().getReactionTime();
         int left = FindLeft(function);
@@ -188,7 +186,7 @@ public class TRFuzzyLogicController {
         double area = Area(function, left, right);
 
         int outArea = XBar(function, left, right, area);
-        return (trMembership == 0) ? outArea : reactionTime;
+        return (tr > 0.35) ? outArea : reactionTime;
     }
 
     private static int FindLeft (double[] function) {
