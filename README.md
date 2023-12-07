@@ -2,7 +2,7 @@
 
 ## Overview
 
-RoadAlertness is a mobile application designed to address the critical issue of sleep-deprived driving, a significant contributor to motor-vehicle accidents. The application employs a context-aware approach, utilizing biometric data, sleep schedules, prescription priorities, and user-reported health symptoms to assess a user's fitness for driving. The goal is to provide personalized recommendations, guiding users to choose between driving and public transportation based on their current state.
+RoadAlertness is a mobile application designed to address the critical issue of sleep-deprived driving, a significant contributor to motor-vehicle accidents. The application employs a context-aware approach, utilizing biometric data, sleep schedules, and user-reported health symptoms to assess a user's fitness for driving. The goal is to provide personalized recommendations, guiding users to choose between driving and public transportation based on their current state.
 
 ## Features
 
@@ -14,12 +14,15 @@ RoadAlertness is a mobile application designed to address the critical issue of 
     - The computed value from user input is fed into a fuzzy logic controller.
     - Fuzzy logic, combined with other inputs, determines the user's fitness for driving.
 
+- **Crash Simulator:**
+    - Based on the fuzzy logic output, a crash simulator is run to determine at which speed the user would crash should they choose to drive.
+
+- **Transportation Recommendations:**
+    - Based on the result of the crash simulator and other contextual factors, the application provides personalized recommendations for the best transportation method.
+
 - **Data Storage and Retrieval:**
     - User symptom input records are stored securely in a SQLite database.
     - Users can view their historical records in the "View Records" section.
-
-- **Transportation Recommendations:**
-    - Based on the fuzzy logic assessment and other contextual factors, the application provides personalized recommendations for the best transportation method.
 
 ## Tech Stack
 
@@ -47,6 +50,7 @@ RoadAlertness is a mobile application designed to address the critical issue of 
     - Input your health symptoms and rate them.
     - Click the `Save Symptoms` button.
     - Input other parameters like hear rate, respiratory rate, sleep hours, compute reaction time.
+    - Click the `Recommendations` to explore generating a travel recommendation.
     - On the `Dashboard` page, click the `Save Record` button to save the data into the database.
     - To view your historical records, click on the panel at the top.
     - A list appears on the screen, click on the list item to view the symptoms data.
